@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="数仓的基本理论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数仓基本理论">
+<meta property="og:url" content="http://yoursite.com/2019/10/04/数仓基本理论文档/index.html">
+<meta property="og:site_name" content="Coder君博客">
+<meta property="og:description" content="数仓的基本理论">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/.com//dw15.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw1.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw02.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw03.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw04.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw05.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw05.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw16.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw06.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw07.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw08.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw09.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw10.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw11.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw12.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw13.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw14.jpg">
+<meta property="og:image" content="http://yoursite.com/.com//dw17.png">
+<meta property="og:image" content="http://yoursite.com/.com//dw18.png">
+<meta property="og:updated_time" content="2019-10-04T05:57:45.014Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数仓基本理论">
+<meta name="twitter:description" content="数仓的基本理论">
+<meta name="twitter:image" content="http://yoursite.com/.com//dw15.jpg">
+  <link rel="canonical" href="http://yoursite.com/2019/10/04/数仓基本理论文档/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>数仓基本理论 | Coder君博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder君博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">www.DongjinCoder.cn</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/数仓基本理论文档/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Coder君">
+      <meta itemprop="description" content="欢迎您的到来！">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder君博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">数仓基本理论
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-04 10:21:44 / 修改时间：13:57:45" itemprop="dateCreated datePublished" datetime="2019-10-04T10:21:44+08:00">2019-10-04</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数仓的基本理论</p>
+<a id="more"></a>
+
+<h1 id="一、数仓基础"><a href="#一、数仓基础" class="headerlink" title="一、数仓基础"></a>一、数仓基础</h1><h2 id="2-11-基础概念"><a href="#2-11-基础概念" class="headerlink" title="2.11 基础概念"></a>2.11 基础概念</h2><p>###2.11.1 数仓的历程</p>
+<ol>
+<li>萌芽阶段。数据仓库概念最早可追溯到20世纪70年代，MIT的研究员致力于研究一种优化的技术架构，该架构试图将业务处理系统和分析系统分开，即将业务处理和分析处理分为不同层次，针对各自的特点采取不同的架构设计原则，MIT的研究员认为这两种信息处理的方式具有显著差别，以至于必须采取完全不同的架构和设计方法。但受限于当时的信息处理能力，这个研究仅仅停留在理论层面。</li>
+<li>探索阶段。20世纪80年代中后期，DEC公司结合MIT的研究结论，建立了TA2（Technical Architecture2）规范，该规范定义了分析系统的四个组成部分：数据获取、数据访问、目录和用户服务。这是系统架构的一次重大转变，第一次明确提出分析系统架构并将其运用于实践。</li>
+<li>雏形阶段。1988年，为解决全企业集成问题，IBM公司第一次提出了信息仓库（InformationWarehouse）的概念，并称之为VITAL规范（VirtuallyIntegrated Technical Architecture Lifecycle）。VITAL定义了85种信息仓库组件，包括PC、图形化界面、面向对象的组件以及局域网等。至此，数据仓库的基本原理、技术架构以及分析系统的主要原则都已确定，数据仓库初具雏形。</li>
+<li>确立阶段。1991年Bill Inmon出版了他的第一本关于数据仓库的书《Building the Data Warehouse》，标志着数据仓库概念的确立。该书指出，数据仓库(DataWarehouse)是一个面向主题的(Subject Oriented)、集成的(Integrated)、相对稳定的(Non-Volatile)、反映历史变化的(Time Variant)数据集合，用于支持管理决策(Decision-Making Support)。该书还提供了建立数据仓库的指导意见和基本原则。凭借着这本书，Bill Inmon被称为数据仓库之父。</li>
+</ol>
+<p>　　数据仓库的概念确立之后，有关数据仓库的实施方法、实施路径和架构等问题引发了诸多争议。1994年前后，实施数据仓库的公司大都以失败告终，导致数据集市的概念被提出并大范围运用，其代表人物是Ralph Kimball。由于数据集市仅仅是数据仓库的某一部分，实施难度大大降低，并且能够满足公司内部部分业务部门的迫切需求，在初期获得了较大成功。但随着数据集市的不断增多，这种架构的缺陷也逐步显现。公司内部独立建设的数据集市由于遵循不同的标准和建设原则，以致多个数据集市的数据混乱和不一致。解决问题的方法只能是回归到数据仓库最初的基本建设原则上来。1998年，Inmon提出了新的BI架构CIF（CorporationInformation Factory，企业信息工厂），新架构在不同架构层次上采用不同的构件来满足不同的业务需求。</p>
+<p>​    参考:<a href="https://blog.csdn.net/songhfu/article/details/78961204" target="_blank" rel="noopener">https://blog.csdn.net/songhfu/article/details/78961204</a></p>
+<p>###2.11.2 数仓的背景</p>
+<ol>
+<li>数仓主要用于解决企业级的数据分析问题。</li>
+</ol>
+<ol>
+<li>数据库是面向事务的设计，数据仓库是面向主题设计的，即信息是按主题进行组织的。</li>
+<li>数据库设计是尽量避免冗余，一般采用符合范式的规则来设计，数据仓库在设计是有意引入冗余，采用反范式的方式来设计。 </li>
+<li>数据库是为捕获和存储数据而设计，数据仓库是为分析数据而设计。</li>
+</ol>
+<p>###2.11.3 数仓的定义</p>
+<p>​    William H.Inmon：数据仓库是一个面向主题的、集成的、非易失的且随时间变化的数据集合，用于支持管理人员的决策。</p>
+<p>###2.11.4 数仓的四大特征</p>
+<ol>
+<li>数据仓库的数据是面向主题的</li>
+<li>数据仓库的数据是集成的</li>
+<li>数据仓库的数据是非易失的</li>
+<li>数据仓库的数据是随时间不断变化的</li>
+</ol>
+<p><strong>面向主题</strong></p>
+<p><font color="Blue">主题（Subject）</font>：特定的数据分析领域与目标。</p>
+<ol>
+<li><font color="Blue">面向主题</font>：为特定的数据分析领域提供数据支持。</li>
+<li>主题是一个抽象的概念，是在较高层次上将企业信息系统中的数据<font color="Blue"><strong>综合、归类并进行分析利用的抽象</strong></font>。在逻辑意义上，它对应企业中某一宏观分析领域所涉及的分析对象。</li>
+<li><font color="Blue">为特定数据分析领域提供的数据与传统数据库中的数据是有不同的</font>&gt;。传统数据库中的数据是原始的、基础的数据，而特定分析领域数据则是需要对它们作必要的抽取、加工与总结而形成。</li>
+<li>数据仓库是面向分析、决策人员的主观要求的，不同的用户有不同的要求，同一个用户的要求也会随时间而经常变化，因此，<font color="Blue">数据仓库中的主题有时会因用户主观要求的变化而变化的</font>。</li>
+</ol>
+<p><strong>面向事务示例</strong></p>
+<ul>
+<li><p>例：一个<font color="red">面向事务处理</font>的“商场”数据库系统， 其数据模式如下<br><font color="red">采购子系统：</font><br>订单（订单号，供应商号，总金额，日期）<br>订单细则（订单号，商品号，类别，单价，数量）<br>供应商（供应商号，供应商名，地址，电话）<br><font color="red">销售子系统：</font><br>顾客（顾客号，姓名，性别，年龄，文化程度，地址，电话）<br>销售（员工号，顾客号，商品号，数量，单价，日期）</p>
+<p><font color="red">库存管理子系统：</font></p>
+<p>领料单（领料单号，领料人，商品号，数量，日期）<br>进料单（进料单号，订单号，进料人，收料人，日期）<br>库存（商品号，库房号，库存量，日期）<br>库房（库房号，仓库管理员，地点，库存商品描述）</p>
+<p><font color="red">人事管理子系统：</font></p>
+<p>员工（员工号，姓名，性别，年龄，文化程度，部门号）<br>部门（部门号，部门名称，部门主管，电话）</p>
+</li>
+</ul>
+<p><strong>面向主题示例</strong></p>
+<ul>
+<li><p>上述数据模式基本上是按照企业内部的业务活动及其需要的相关数据来组织数据的存储的，没有实现真正的数据与应用分离，其抽象程度也不够高。</p>
+</li>
+<li><p>如果按照面向主题的方式进行数据组织，首先应该抽取主题，即按照管理人员的分析要求来确定主题，而与每个主题相关的数据又与有关的事务处理所需的数据不尽相同。</p>
+</li>
+</ul>
+<p><strong>面向主题划分如下：</strong></p>
+<p><strong>主题一：</strong><font color="red">商品</font></p>
+<p><font color="Blue">商品固有信息：</font>商品号，商品名，类别，颜色等<br><font color="Blue">商品采购信息：</font>商品号，供应商号，供应价，供应日期，供应量等<br><font color="Blue">商品销售信息：</font>商品号，顾客号，售价，销售日期，销售量等<br><font color="Blue">商品库存信息：</font>商品号，库房号，库存量，日期等</p>
+<p><strong>主题二：</strong><font color="red">供应商</font></p>
+<p><font color="Blue">供应商固有信息：</font>供应商号，供应商名，地址，电话等<br><font color="Blue">供应商品信息：</font>供应商号，商品号，供应价，供应日期，供应量等</p>
+<p><strong>主题三:</strong><font color="red">顾客</font></p>
+<p><font color="Blue">顾客固有信息：</font>顾客号，顾客名，性别，年龄，文化程度，住址，电话等<br><font color="Blue">顾客购物信息：</font>顾客号，商品号，售价，购买日期，购买量等</p>
+<ul>
+<li>在每个主题中，<font color="Blue">都包含了有关该主题的所有信息</font>，同时又抛弃了与分析处理无关或不需要的<br>数据，从而将原本分散在各个子系统中的有关信息集中在一个主题中，形成有关该主题的一<br>个完整一致的描述。面向主题的数据组织方式所强调的就是要形成一个这样一致的信息集合。</li>
+<li><font color="Blue">不同的主题之间也有重叠的内容</font>，但这种重叠是逻辑上的，而不是物理存储上的重叠；是部<br>分细节的重叠，而不是完全的重叠。</li>
+</ul>
+<p><strong>集成</strong></p>
+<ul>
+<li><p>集成性是指数据仓库中数据必须是一致的。数据仓库的数据是从原有的分散的多个数据<br>库、数据文件和数据段中抽取来的，数据来源可能既有内部数据又有外部数据。</p>
+</li>
+<li><p>数据仓库中的数据是为分析服务的，而分析需要多种广泛的不同数据源以便进行比较、<br>鉴别，因此数据仓库中的数据必须从多个数据源中获取，这些数据源包括多种类型数据<br>库、文件系统以及Internet网上数据等，它们通过数据集成而形成数据仓库中的数据。</p>
+<p><strong>集成的方法：</strong></p>
+<ul>
+<li>统一：<font color="red">消除不一致的现象</font></li>
+<li>综合：<font color="red">对原有数据进行综合和计算</font></li>
+</ul>
+<p><strong>集成需要考虑的问题：</strong></p>
+<ul>
+<li>数据格式</li>
+<li>计量单位</li>
+<li>数据代码含义混乱</li>
+<li>数据名称混乱</li>
+</ul>
+</li>
+</ul>
+<p><strong>非易失</strong></p>
+<ul>
+<li>数据仓库中的数据是经过抽取而形成的分析型数据，不具有原始性，主要供企业决策分析之用，<font color="Blue">执行的主要是‘查询’操作，一般情况下不执行‘更新’操作</font>。同时，一个稳定的数据环境也有利于数据分析操作和决策的制订。</li>
+<li>面向应用的事务数据库需要对数据进行频繁的插入、更新操作，而对于数据仓库中数据的操作<font color="Blue">仅限于数据的初始导入和记录查询</font>。</li>
+</ul>
+<p><strong>随时间不断变化</strong></p>
+<ul>
+<li><p>数据仓库以维的形式对数据进行组织，<font color="Blue">时间维是数据仓库中很重要的一个维度</font>。并且数据仓库中的数据时间跨度大，从几年甚至到几十年，称为历史数据。</p>
+</li>
+<li><p>数据仓库中的数据必须以一定时间段为单位进行统一更新。</p>
+</li>
+<li><p>数据变化方式:</p>
+<p>–不断增加新的数据内容<br>–不断删去旧的数据内容<br>–更新与时间有关的综合数据</p>
+</li>
+</ul>
+<p>###2.11.5 数仓的意义</p>
+<p>对于不同行业的数仓意义不一样，但是盈利或者变得更好等都是最终目的。如一个电商行业的数据仓库从各个角度观察其意义如下：</p>
+<ol>
+<li><p>从商户角度，有利于企业新产品开发；有利于企业产品不同时期生产情况调整；有利于企业战略布局。</p>
+</li>
+<li><p>从电商平台角度，有利于在不同时期推出该时期大部分客户需要的产品；提高产品销售额从而给股东更大收益；有利于节省成本等。</p>
+</li>
+<li><p>从用户角度，有利于方便快捷的购买到所需产品；有利于提高生活质量等。</p>
+</li>
+<li><p>从数据角度，可以保存历史数据；可以获取变化数据；同时不仅仅需要以往历史数据而且还需要根据时代发展方向和消费行为转变及时调整，从而在未来发展上取得更大收获。</p>
+</li>
+</ol>
+<p>###2.11.6 数据仓库和数据库关系</p>
+<ul>
+<li>数据库是面向事务，属于操作型。数据仓库是面向分析，属于分析型。</li>
+<li>数据库是数据仓库的基础，数据库较小，而数据仓库较大，通常一个数据仓库中的数据来源于多个数据库的异构。</li>
+<li>数据不一样。</li>
+</ul>
+<p>对比如下：</p>
+<p><img src="/.com//dw15.jpg" alt="img"></p>
+<p><strong>数仓模型</strong></p>
+<p>###2.11.7 <strong>概念模型(CDM)</strong></p>
+<p>​    概念数据模型主要用来描述现实世界的概念化结构，是对需求进行综合、归纳和抽象之后，形成的一个独立于具体数据库管理软件的模型。概念书模型的设计以实体-联系（E-R）模型为基础，按用户的观点对系统所需数据建模。它能够让数据库设计人员的初始阶段百通计算机系统和DBMS的具体技术问题，集中精力分析数据及其相互关系等。目标是同意业务概念，作为业务人员和技术人员之间沟通的桥梁。</p>
+<p>###<strong>2.11.8 逻辑模型(LDM)</strong></p>
+<p>​    逻辑数据模型是对概念数据模型的进一步分解和细化，是具体的DBMS所支持的数据模型，如网状数据模型（Network Data Model）、层次数据模型（hierarchical Data Model）、关系数据模型（Relation Data Model）等等。逻辑数据模型是根据业务规则确定的关于业务对象、业务对象数据项、业务对象之间关系的基本蓝图。逻辑数据模型即要面向用户，又要面向系统。</p>
+<p>​    逻辑数据模型的目标是尽可能详细的描述数据，但并不考虑在物理上如何实现。逻辑数据模型的设计不仅影响数据库设计的方向，还间接影响最终数据库的性能。</p>
+<p>###<strong>2.11.9 业务模型(BDM)</strong></p>
+<p>​    业务流程模型主要用来描述业务功能的流程定义，是从用户角度对业务规则进行描述的一种模型。业务流程模型使用图形符号表示处理、流、消息、协作以及他们之间的相互关系。它有一个或多个起点和终点。</p>
+<p>###<strong>2.11.10 物理模型(PDM)</strong></p>
+<p>​    物理数据模型用于描述数据在存储介质上的组织结构，与具体的DBMS相关。它是在逻辑数据模型的基础上，考虑各种具体的技术实现因素，进行数据库体系结构设计，真正实现数据在数据库中的表示。物理数据模型目标是为一个给定的逻辑模型选取一个最适合应用要求的物理结构。</p>
+<p><strong>需求模型(RQM)</strong></p>
+<p>​    这是一种文档式模型，它通过准确恰当地列出、解释开发过程中需要实现的功能行为来描述待开发项目。你可以为开发过程中需要使用到的各种结构化技术文档（功能或技术规格说明书，测试计划）而使用需求模型。</p>
+<h3 id="数仓ETL"><a href="#数仓ETL" class="headerlink" title="数仓ETL"></a><strong>数仓ETL</strong></h3><p>###<strong>2.11.11 数据ETL介绍</strong></p>
+<p>​    对于数据仓库的加载，ETL分为数据抽取（Extract）、数据变换（Convert）、数据转换（Transform）以及数据加载（Load）4个阶段。每个阶段之间以文本文件作为接口，即数据抽取（Extract）阶段读取数据源产生EXF文件，CSS（Converting/Sort/Split）阶段读取EXF文件产生CIF文件，数据转换（Transform）阶段读取CIF文件产生PLF文件，数据加载（Load）阶段读取PLF文件加载到数据仓库。</p>
+<p>​    此架构将数据抽取、转换和加载分隔开，以CIF（Common Interface Format）作为数据仓库表和数据源之间的桥梁，从而使每个功能相对独立，减少各功能相互间的耦合度，同时，每个模块的功能被细分后，逻辑更加简单，更容易控制开发错误，提高开发效率。另外，也便于系统运行过程中的错误追综和异常恢复。</p>
+<p>​    对于数据集市的加载，由于数据质量已经得到保证，ETL过程不再分割，一个目标集市表直接对应一个ETL Job完成从数据仓库表通过Aggregation加载到数据集市，由于从数据仓库到数据集市的加载相对简单，因此本设计说明书着重于从数据源到数据仓库的加载过程。</p>
+<h3 id="2-11-12-数据的抽取-E"><a href="#2-11-12-数据的抽取-E" class="headerlink" title="2.11.12 数据的抽取(E)"></a>2.11.12 数据的抽取(E)</h3><p>将数据从源拉去到目标地，拉去过程中可能对数据有一定操作，即完成数据的抽取。</p>
+<p>###2.11.13 增量抽取</p>
+<p>​    Sqoop提供增量导入模式，用于只导入新的数据行, Sqoop支持两种类型的增量导入：append和lastmodified。可以使用–incremental参数指定增量导入的类型。</p>
+<p><img src="/.com//dw1.png" alt="img"> </p>
+<p>​    Sqoop支持两种类型的增量导入：append和lastmodified。可以使用–incremental参数指定增量导入的类型。</p>
+<p>当被导入表的新行具有持续递增的行id值时，应该使用append模式。指定行id为–check-column的列。Sqoop导入那些被检查列的值比–last-value给出最大的数据行。</p>
+<p>​    Sqoop支持的另一个表修改策略叫做lastmodified模式。当源表的数据行可能被修改，并且每次修改都会更新一个last-modified列为当前时间戳时，应该使用lastmodified模式。那些被检查列的时间戳比–last-value给出的时间戳新的数据行被导入。</p>
+<p>​    增量导入命令执行后，在控制台输出的最后部分，会打印出后续导入需要使用的last-value。当周期性执行导入时，应该用这种方式指定–last-value参数的值，以确保只导入新的或修改过的数据。可以通过一个增量导入的保存作业自动执行这个过程，这是适合重复执行增量导入的方式。</p>
+<p>###2.11.14 全量抽取</p>
+<p>​    采用整体拉取的方式抽取数据。ETL通常是按一个固定的时间间隔,周期性定时执行,因此对于整体拉取的方式而言,每次导入的数据需要覆盖上次导入的数据。Sqop中提供了 hive-overwrite参数实现覆盖导入。 hive-overwrite的另一个作用是提供了一个幂等操作的选择。所谓幂等操作指的是其执行任意多次所产生的影响均与次执行的影响相同。这样就能在导入失败或修复bug后可以再次执行该操作,而不用担心重复执行会对系统造成数据混乱。具体Sqoop命令如下,其中 hive-import参数表示向hive表导入,hive- table参数指定目标hive库表。</p>
+<p>###2.11.15 缓慢变化数据</p>
+<p>​    确定了数据的抽取方式，还需要确定数据的抽取类型，即全量抽取还是增量抽取。如果数据量小并且容易处理，一般采用全量抽取即可。这种方式适合基础编码类的数据源，最典型的是我们通常所说的数据字典类的码表，在数据仓库中就是维表。如果数据量很大，就只能抽取变化的源数据，即最后一次抽取以来发生了变化的数据。这种数据抽取模式成为变化数据捕获，简称CDC（change data caputer）。</p>
+<p>​    CDC大体分为两种侵入式和非侵入式。侵入式是指CDC操作会给源系统带来性能影响。只要CDC对源库进行了SQL语句操作，就可以认为是侵入式的。常用的CDC方法也有以下四种：</p>
+<ol>
+<li>基于时间戳的CDC</li>
+</ol>
+<p>时间戳：要求源数据里有插入时间和更新时间列，取新增数据根据插入时间，取修改数据根据更新时间</p>
+<p>自增列：根据自增列取新增数据</p>
+<p>这个方法最常用也最简单，简单的sql语句就可以实现</p>
+<p>但是缺点也很明显,不能记录删除操作,触发有逻辑删除的功能,无法识别过多次更新,只能拿到最后一次的,一般为批量操作,不具有实时性,而且具有侵入性.</p>
+<ol start="2">
+<li>基于触发器的CDC</li>
+</ol>
+<p>当执行insert,update,delete这些SQL语句是,可以使用数据库的触发器来执行一些动作,比如触发器将变更的数据保存到临时表中,然后从临时表中抽取数据到贴源层,大多数情况下,触发器会降低业务系统的性能,因此这种方式使用的不多.作为替代方案,可以使用源数据库的复制功能,复制一份数据到备库上,在备库上建立触发器,是个很有效的方法,而且没有侵入性.这个方式需要额外的存储空间,看起来是冗余数据,实际上对业务库来讲,实现主库上进行写操作,备库上进行读操作,实现读写分离,是提高性能和高可用一个手段.</p>
+<ol start="3">
+<li>基于快照的CDC</li>
+</ol>
+<p>如果没有时间戳也不允许使用触发器,就要使用快照表了.可以通过比较原表和快照表来获得变化数据。所谓快照就是一次性抽取源数据中的全部数据，把这些数据加载到ODS层，下次需要同步的时候，再从源数据抽取全部的数据，并把这些数据放到ODS层，比较这两个版本的数据，找出变化数据。一般通过SQL语句可以实现，比如有个表有两列：id和name，在临时过渡区有两个快照 snapshot_1，snapshot_2在mysql中可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SELECT &apos;U&apos; AS OprType, t2.id AS id, t2. NAME AS `name`</span><br><span class="line"></span><br><span class="line">FROM snapshot_1 tl INNER JOIN snapshot_2 t2 ON t1. id = t2.1</span><br><span class="line"></span><br><span class="line">WHERE tl NAME &lt;&gt; a t2. NAME</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">SELECT &apos;D&apos; AS OprType, tl id AS id, t1 NAME AS `name`</span><br><span class="line"></span><br><span class="line">FROM SNAPSHOT 1 tl LEFT JOIN snapshot_2 t22 ON t1.id=t2.id</span><br><span class="line"></span><br><span class="line">WHERE t2. id IS NULL</span><br><span class="line"></span><br><span class="line">UNION ALL</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">SELECT &apos;I&apos; AS OprType, t2.Id AS id, L2. NAME AS `name`</span><br><span class="line"></span><br><span class="line">FROM snapshot_2 t2 LEFT JOIN snapshot_1 t1 ON t2.id =t</span><br><span class="line"></span><br><span class="line">WHERE tl id IS NULL;</span><br></pre></td></tr></table></figure>
+
+<p>就可以获取到数据，这种方式需要临时过渡区来保存快照，浪费存储空间，另外数据量很大时，这种查询会有严重的性能问题。</p>
+<ol start="4">
+<li>基于日志的CDC</li>
+</ol>
+<p>最复杂和最没有入侵的CDC方式就是基于日志的方式。数据库会把每个插入、更新和删除操作记录在日志里。只要在数据库中开启事务日志，再将日志读取出来，就可以还原这部分变化数据了。例如在mysql中，启用log_bin日志，并使用mysqlbinlog工具读取出来</p>
+<p>首先查看一下是否开启了二进制日志：SHOW VARIABLES LIKE ‘%log_bin%’</p>
+<p><img src="/.com//dw02.png" alt="img"> </p>
+<p>off没有开启，开启步骤如下</p>
+<p>1 找到mysql的配置文件，my.cnf一般在/etc，在[mysqld]下面添加log-bin= /var/log/mysql-bin，重启mysql服务</p>
+<p><img src="/.com//dw03.png" alt="img"> </p>
+<p>on变为开启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">插入一条数据</span><br><span class="line"></span><br><span class="line">INSERT INTO dim_date VALUES (NULL,&apos;2050-01-02&apos;,1,&apos;January&apos;,1,2050)</span><br><span class="line"></span><br><span class="line">查看当前日志</span><br><span class="line"></span><br><span class="line">show master status; 或者 SHOW MASTER LOGS;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//dw04.png" alt="img"> </p>
+<p>查看日志，在shell下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog --start-position=0  mysql-bin.000001 | mysql -uroot -p123456</span><br><span class="line"></span><br><span class="line">把日志文件输出到文本文件中</span><br><span class="line"></span><br><span class="line">mysqlbinlog –start-date=’2018-11-25’ –end-date=’2018-11-26’ mysql-bin.000001 &gt; /tmp/000001.txt</span><br></pre></td></tr></table></figure>
+
+<p>执行文本文件的sql语句就可以了。基于日志的CDC也有缺陷，即只能用来处理一种特定的数据库。</p>
+<h3 id="2-11-16-数据清洗-数据转换-T"><a href="#2-11-16-数据清洗-数据转换-T" class="headerlink" title="2.11.16 数据清洗(数据转换)(T)"></a>2.11.16 数据清洗(数据转换)(T)</h3><p>​    数据转换是将数据进行重构以及标准化，消除数据的不一致，处理缺失数据，转换最主要的任务就是数据清洗。数据清洗是对数据进行重新审查和校验的过程，目的在于删除重复信息，纠正存在的错误，并提供数据一致性。我们说数据仓库的数据源是多个业务系统，各来源的数据存在着差异和和冲突，也就是我们所说的脏数据，按照一定的规则处理脏数据的过程就是数据清洗。</p>
+<p>​    在做数据清洗的时候首先要进行清洗流程分析和设计，找到数据的主要问题和特征，画逻辑图，类似下图，将每步操作都清楚记录下来，方便项目组内的各人员的分工合作以及问题追踪</p>
+<p><img src="/.com//dw05.png" alt="1556420944413"></p>
+<h3 id="数据清洗流程："><a href="#数据清洗流程：" class="headerlink" title="数据清洗流程："></a>数据清洗流程：</h3><p><font color="red">预处理</font>：对于大的数据文件的加载，特别是新的文件，要进行预先诊断和尖刺，不能贸然加载。</p>
+<p><font color="red">标准化处理</font>：建立标准化对照表，将不一致的数据进行统一，一般需要建立标准码表，建立与标准值转化有关的函数和子程序，建立标准值与非标准值对照的映像表</p>
+<p><font color="red">去重处理</font>：一种是整行数据完全重复，这种可以通过SQL语句达到去重，使用distinct或者group by 进行处理，还有一种是有重复的字段，这种一般需要子查询来进行处理，但是需要跟业务方进行确认如何保留去重数据的规则，数据清洗是一个反复的过程，需要不断的发现问题，解决问题。对于是否过滤，是否修正一般要求业务方确认，对于过滤掉的数据，写入Excel文件或者将过滤数据写入数据表，在ETL开发的初期可以每天向业务单位发送过滤数据的邮件，促使他们尽快地修正错误,同时也可以做为将来验证数据的依据。数据清洗需要注意的是不要将有用的数据过滤掉，对于每个过滤规则认真进行验证，并要业务方确认。</p>
+<h3 id="2-11-17-格式内容清洗"><a href="#2-11-17-格式内容清洗" class="headerlink" title="2.11.17 格式内容清洗"></a>2.11.17 格式内容清洗</h3><p>如果数据是由系统日志而来，那么通常在格式和内容方面，会与元数据的描述一致。而如果数据是由人工收集或用户填写而来，则有很大可能性在格式和内容上存在一些问题，简单来说，格式内容问题有以下几类：</p>
+<ol>
+<li><p>时间、日期、数值、全半角等显示格式不一致</p>
+<p>这种问题通常与输入端有关，在整合多来源数据时也有可能遇到，将其处理成一致的某种格式即可。</p>
+</li>
+<li><p>内容中有不该存在的字符</p>
+<p>某些内容可能只包括一部分字符，比如身份证号是数字+字母，中国人姓名是汉字(赵C这种情况还是少数)。最典型的就是头、尾、中间的空格，也可能出现姓名中存在数字符号、身份证号中出现汉字等问题。这种情况下，需要以半自动校验半人工方式来找出可能存在的问题，并去除不需要的字符。</p>
+</li>
+<li><p>内容与该字段应有内容不符</p>
+<p>​    姓名写了性别，身份证号写了手机号等等，均属这种问题。 但该问题特殊性在于：并不能简单的以删除来处理，因为成因有可能是人工填写错误，也有可能是前端没有校验，还有可能是导入数据时部分或全部存在列没有对齐的问题，因此要详细识别问题类型。</p>
+<p>​    格式内容问题是比较细节的问题，比如同一个值，有空格和没空格统计出来结果就不正确了、统计值不全(数字里掺个字母当然求和时结果有问题)、模型输出失败或效果不好(数据对错列了，把日期和年龄混了等)。因此，在处理的数据是人工收集而来，或者产品前端校验设计不太好的时候，就需要找数据的特征，针对性的进行处理</p>
+</li>
+</ol>
+<h3 id="2-11-18-缺失数据处理"><a href="#2-11-18-缺失数据处理" class="headerlink" title="2.11.18 缺失数据处理"></a>2.11.18 缺失数据处理</h3><p>缺失值的处理是很常规的操作，可以按照一下步骤进行:</p>
+<ol>
+<li><p>确定缺失值范围：对每个字段都计算其缺失值比例，然后按照缺失比例和字段重要性，分别制定策略，可用下图表示：</p>
+<p><img src="/.com//dw05.jpg" alt="1556420944413"></p>
+</li>
+<li><p>去除不需要的字段：这一步很简单，直接删掉即可，但强烈建议清洗每做一步都备份一下，或者在小规模数据上试验成功再处理全量数据，不然删错了会追悔莫及(多说一句，写SQL的时候delete一定要配where!)。</p>
+</li>
+<li><p>填充缺失内容：某些缺失值可以进行填充，方法有以下三种：</p>
+<ul>
+<li>以业务知识或经验推测填充缺失值</li>
+<li>以同一指标的计算结果(均值、中位数、众数等)填充缺失值</li>
+<li>以不同指标的计算结果填充缺失值</li>
+</ul>
+<p>前两种方法比较好理解。关于第三种方法，举个最简单的例子：年龄字段缺失，但是有身份证号，可以通过截取身份证号来获取年龄</p>
+</li>
+<li><p>重新取数：如果某些指标非常重要又缺失率高，那就需要和取数人员或业务人员了解，是否有其他渠道可以取到相关数据。</p>
+</li>
+</ol>
+<h3 id="2-11-19-数据内容值错误处理"><a href="#2-11-19-数据内容值错误处理" class="headerlink" title="2.11.19 数据内容值错误处理"></a>2.11.19 数据内容值错误处理</h3><p>错误值产生的原因是业务系统不够健全，在接收输入后没有进行判断直接写入后台数据库造成的，比如数值数据输成全角数字字符、字符串数据后面有一个回车操作、日期格式不正确、日期越界等。这一类数据也要分类，对于类似于全角字符、数据前后有不可见字符的问题，通过转换进行处理，对于值的格式不正确或者越界或者一些主外键对应不上数据，需要将这些数据写入日志文件中，跟业务方确定这些数据的处理方式，是丢弃，还是修正，还是标准化等。</p>
+<p><font color="red">逻辑错误清洗</font></p>
+<p>这部分的工作是去掉一些使用简单逻辑推理就可以直接发现问题的数据，防止分析结果走偏。主要包含以下几个步骤：</p>
+<p>去除不合理值，比如年龄超过200岁，日期越界，这种的就要么删掉，要么按缺失值处理。</p>
+<p><font color="red">修正矛盾内容</font></p>
+<p>有些字段是可以互相验证的，比如身份证号和年龄，当年龄跟身份证号上的出生日期不匹配的时候，在这种时候，需要根据字段的数据来源，来判定哪个字段提供的信息更为可靠，去除或重构不可靠的字段。逻辑错误除了以上列举的情况，还有很多未列举的情况，在实际操作中要酌情处理。另外，这一步骤在之后的数据分析建模过程中有可能重复，因为即使问题很简单，也并非所有问题都能够一次找出，我们能做的是使用工具和方法，尽量减少问题出现的可能性，使分析过程更为高效。</p>
+<p><font color="red">非需求数据清洗</font></p>
+<p>这一步说起来非常简单：把不要的字段删了。但实际操作起来，有很多问题，把看上去不需要但实际上对业务很重要的字段删了;某个字段觉得有用，但又没想好怎么用，不知道是否该删; 如果数据量没有大到不删字段就没办法处理的程度，那么能不删的字段尽量不删，另外必须要删的时候，一定要做好数据的备份。</p>
+<h3 id="2-11-20-关联性验证"><a href="#2-11-20-关联性验证" class="headerlink" title="2.11.20 关联性验证"></a>2.11.20 关联性验证</h3><p>如果你的数据有多个来源，那么有必要进行关联性验证。发现这种不一致，需要跟业务方确认，如何需要调整或去除数据。多个来源的数据整合是非常复杂的工作，一定要注意数据之间的关联性，尽量在分析过程中不要出现数据之间互相矛盾，而你却毫无察觉的情况，数据是数据仓库的基础，如果数据不准确，最后数据仓库中建立的数据模型也是无效的，这个数据仓库的项目就失败了，所以数据清洗特别重要，要反复验证。</p>
+<h3 id="2-11-21-数据装载（L）"><a href="#2-11-21-数据装载（L）" class="headerlink" title="2.11.21 数据装载（L）"></a>2.11.21 数据装载（L）</h3><p>数据仓库搭建完成后，有一些预装载的操作先进行，比如时间维度以及其他不从源数据获取的一些数据进行预装载，接着就是初始装载和定期装载。</p>
+<p>历史数据加载(History Load)是指将历史一定时间段的数据(主要是细节数据)加载到数据仓库，对于ETL的历史加载，需要SAP系统将原有历史数据导入SAP以后，ETL再统一从SAP的接口中加载历史数据。</p>
+<p>日常数据加载(Incremental Load)是指周期性地将该周期内的增量数据加载到数据仓库数据库中。</p>
+<p>针对初始数据加载、历史数据加载（Initial Load）和日常数据加载（Incremental Load）的数据量、数据源和工作流程的不同，设计将采用不同的ETL策略。</p>
+<p>对于日常数据加载，由于需要定期自动运行相关的程序，因此需要有支持scheduler的工具支持以满足自动运行的需要，数据源主要是业务系统针对数据仓库系统提供的接口表，程序逻辑的处理要求非常严格。</p>
+<p>对于初始数据加载，由于需要在上线日之前一次性完成，因此在上线日之前业务部门必须完成相关的数据清洗，从而保证初始数据加载的顺利完成，否则，将造成上线后数据仓库的数据质量不高。</p>
+<p>因为初始数据加载和历史数据加载都是一次性执行，所以主要采用手工和程序控制相结合的方式进行，不需要复杂的工作调度程序。程序逻辑的处理也不需要非常严格，如果其中涉及的逻辑非常复杂，也可以将源数据直接导出成数据文件，经业务部门对数据进行确认或修正签字生效以后，将数据文件直接加载到数据仓库中，从而降低ETL开发的难度。</p>
+<p>与日常数据加载不同，历史数据加载可能按不同的时段需要从分散在不同的数据表中加载数据，并可能需要不同的数据转换逻辑，因此针对不历史数据时段需要单独开发不同的ETL程序。</p>
+<h3 id="2-11-22-数据预装载"><a href="#2-11-22-数据预装载" class="headerlink" title="2.11.22 数据预装载"></a>2.11.22 数据预装载</h3><p>预装载就是将整个数仓中可以预知的固定数据提前制作好，使用sql或者脚本制作，然后将其数据一次性加载到数据仓库中。比如年的维度表，年是固定的，咱们统一起始和结束年份生成数据即可，这样唯一的不好就是提前浪费咯空间，但是数仓忽律这些空间的浪费。比如时间、身份、平台等等。</p>
+<h3 id="2-11-23-初始装载"><a href="#2-11-23-初始装载" class="headerlink" title="2.11.23 初始装载"></a>2.11.23 初始装载</h3><p>初始数据加载(Initial Load)是指在系统正式运行之前，需要将当前完整企业数据视图一次性地加载到数据仓库中，作为数据仓库的基础数据。</p>
+<h3 id="2-11-24-定期装载"><a href="#2-11-24-定期装载" class="headerlink" title="2.11.24 定期装载"></a>2.11.24 定期装载</h3><p>定期装载其实是日常加载数据的定时任务，即是将每天装载流程进行启动，如果做得好优秀一些，应该在定期业务流程中添加是否将数据采集成功，不成功可以报警，以便及时处理，不影响整个业务。</p>
+<h3 id="2-11-25-自动化"><a href="#2-11-25-自动化" class="headerlink" title="2.11.25 自动化"></a>2.11.25 自动化</h3><p>​    上面我们已经把每天需要增量跑的任务编写完了，这个任务需要每天定时去执行，一般来讲需要制定一个任务计划表，这个任务来记录所有的任务的执行周期，执行时间，负责人，联系方式等信息，当一个项目很大，有很多的任务，每个任务的调度周期和时间可能是不一样的，比如有日结的数据，也有月结的数据，日结是每天要进行汇总计算的，月结是每月月底要进行计算的，可能日结是项目组中的一个人写的，月结是令一个人写的，为保证整体项目的在试运行期间的平稳运行，一般要有这么一个表格，当项目有问题时，找相应的负责人。</p>
+<h3 id="2-11-26-ETL的流程整合"><a href="#2-11-26-ETL的流程整合" class="headerlink" title="2.11.26 ETL的流程整合"></a>2.11.26 ETL的流程整合</h3><p>​    ETL系统需要能够在限定的时间内完成对日常数据的周期性的自动加载流程，支持对初始数据及历史数据的加载，并满足未来扩充的要求。数据仓库系统的数十个目标数据表和相应数量的数据源意味着ETL程序的复杂性，庞大的数据量则需要充分考虑系统运行的效率，为开发复杂的程序，就要求灵活而简单明了的程序结构，而程序的效率要求的优化又往往需要针对不同数据的个性化设计，因此，ETL的设计必须在开发的可管理性和程序性能之间平衡，有些实现复杂、个性化突出的做法就要让位于要求一致的程序结构。这样的平衡是本设计中很重要的一个考虑因素。</p>
+<p>​    在基于此设计思路的ETL架构下，每个数据表的ETL过程按照ETL的特性统一为3个标准步骤，即数据抽取/变换 (Extract/Convert)、数据转换(Transform)和数据加载（Load），所有数据的ETL都被纳入到这个标准框架中，因此，所有需开发的ETL程序的流程也就被对应分为3个主要的步骤, 每个步骤需要记录完整的处理中间状态及完善的日志信息，对于程序员来说明，遵循统一的架构开发可以保证所有开发的程序的结构一致性，便于程序的管理，同时对于开发和测试人员来说，根据不同步骤的中间状态记录及日志信息很容易定位及修正程序的bug。</p>
+<p>###2.11.27 ETL的流程示例</p>
+<p><img src="/.com//dw16.jpg" alt="1556420944413"></p>
+<p>该过程为一个完整的etl流程，其中pn为其中的步骤。</p>
+<p><strong>数据模型</strong></p>
+<p>在说数据模型前，先说说数据存储，数据存储方式有如下几种：</p>
+<ul>
+<li><p>虚拟存储方式 </p>
+</li>
+<li><p>基于关系表的存储方式 </p>
+</li>
+</ul>
+<p>虚拟存储方式：</p>
+<p>​    没有专门的数据仓库数据存储，数据仓库中的 数据仍然在源数据库中。只是根据用户的多维 需求及形成的多维视图临时在源数据库中找出 所需要的数据，完成多维分析。 </p>
+<ul>
+<li>优点：组织方式简单、花费少、使用灵活；  </li>
+<li>缺点：只有当源数据库的数据组织比较规范、 没有数据不完备及冗余，同时又比较接近多 维数据模型时，虚拟数据仓库的多维语义才 容易定义。而在一般的数据库应用中，这很 难做到。</li>
+</ul>
+<p>基于关系表的存储方式：</p>
+<ul>
+<li><p>将数据仓库的数据存储在关系数据库的表 结构中，在元数据的管理下完成数据仓库 的功能。 </p>
+</li>
+<li><p>实体关系（ER）模型一般用于关系型数据 库设计，而数据仓库采用<font color="red">星型、雪花型、事实星座</font>基于关系表的存储方式。</p>
+</li>
+<li><p>关系数据库一般采用二维数据表的形式来表示 数据，一个维是行，另一个维是列，行和列的 交叉处就是数据元素。关系数据的基础是关系数据库模型，通过标准的SQL语言来加以实现。 </p>
+</li>
+<li><p>数据仓库是多维数据库，它扩展了关系数据库 模型，以星形架构为主要结构方式的，并在它 的基础上，扩展出理论雪花形架构和数据星座 等方式，但不管是哪一种架构，维度表、事实 表和事实表中的量度都是必不可少的组成要素。</p>
+</li>
+</ul>
+<h3 id="2-11-28星型模型"><a href="#2-11-28星型模型" class="headerlink" title="2.11.28星型模型"></a>2.11.28星型模型</h3><ul>
+<li>数据仓库中包含： </li>
+</ul>
+<p>(1) 一个大的包含大批数据和不冗余的事 实表（中心表）；  </p>
+<p>(2)一组小的附属表，称为维表。每维一 个。 </p>
+<ul>
+<li><p><font color="red">事实表</font>中每条元组都含有指向各个维表的 外键和一些相应的测量数据，事实表的记 录数量很多，维表中记录的是有关这一维 的属性。</p>
+</li>
+<li><p>星形模型可以采用关系型数据库结构，模 型的核心是事实表，围绕事实表的是维度 表。通过事实表将各种不同的维度表连接 起来，各个维度表都连接到中央事实表。 维度表中的对象通过事实表与另一维度表 中的对象相关联，这样就能建立各个维度 表对象之间的联系。</p>
+</li>
+<li><p>事实表 </p>
+<ul>
+<li><p>主要包含了描述特定商业事件的数据，即某些特定 商业事件的度量值。 </p>
+</li>
+<li><p>一般情况下，事实表中的数据不允许修改，新的数 据只是简单地添加进事实表中。</p>
+</li>
+</ul>
+</li>
+<li><p>维度表</p>
+<ul>
+<li>主要包含了存储在事实表中数据的特征 数据。 </li>
+<li>每一个维度表利用维度关键字通过事实表中的外键 约束于事实表中的某一行，实现与事实表的关联， 这就要求事实表中的外键不能为空，这与一般数据库中外键允许为空是不同的。</li>
+</ul>
+</li>
+<li><p>这种结构使用户能够很容易地从维度表中的数 据分析开始，获得维度关键字，以便连接到中 心的事实表，进行查询。</p>
+</li>
+<li><p>星型模型示例：</p>
+<p><img src="/.com//dw06.jpg" alt="img"></p>
+</li>
+</ul>
+<h3 id="2-11-29-雪花模型"><a href="#2-11-29-雪花模型" class="headerlink" title="2.11.29 雪花模型"></a>2.11.29 雪花模型</h3><ul>
+<li><p>雪花模型是对星形模型的扩展，每一个维 度都可以向外连接多个详细类别表。 </p>
+</li>
+<li><p>在这种模式中，维度表除了具有星形模型 中维度表的功能外，还连接对事实表进行 详细描述的详细类别表，详细类别表通过对事实表在有关维上的详细描述达到了缩小事实表和提高查询效率的目的。</p>
+</li>
+<li><p>雪花模型示例:</p>
+<p><img src="/.com//dw07.jpg" alt="img"></p>
+</li>
+</ul>
+<h3 id="2-11-30-事实星座模型"><a href="#2-11-30-事实星座模型" class="headerlink" title="2.11.30 事实星座模型"></a>2.11.30 事实星座模型</h3><ul>
+<li><p>一个复杂的商业智能应用往往会在数据仓 库中存放多个事实表，这时就会出现多个 事实表共享某一个或多个维表的情况，这 就是事实星座，也称为星系模型(galaxy  schema)。</p>
+</li>
+<li><p>事实星座模型示例：</p>
+<p><img src="/.com//dw08.jpg" alt="img"></p>
+</li>
+</ul>
+<h3 id="2-11-31-星型模型和雪花模型区别"><a href="#2-11-31-星型模型和雪花模型区别" class="headerlink" title="2.11.31 星型模型和雪花模型区别"></a>2.11.31 星型模型和雪花模型区别</h3><ul>
+<li>雪花模式的维表可能是规范化的，以便减 少冗余。这种表易于维护，并节省存储空 间。 </li>
+<li>实际上，与巨大的事实表相比，这种空间 的节省可以忽略。 </li>
+<li>由于执行查询需要更多的连接操作，雪花 结构可能降低浏览的性能。 </li>
+<li>在数据仓库设计中，雪花模式不如星型模 式流行。</li>
+</ul>
+<h3 id="2-11-32-模型应用场景"><a href="#2-11-32-模型应用场景" class="headerlink" title="2.11.32 模型应用场景"></a>2.11.32 模型应用场景</h3><p>​    现目前绝大多数项目中，大部分 Fact 和 Dimension 的关联关系都是星型，极少数采用雪花模型 。至于什么样的模型适用什么场景很难有一个硬性的规则去决定，主要取决于模型的运行效率 和 研发人员的经验 ，以及当前的趋势，而当前的趋势则是星型模型。</p>
+<p><strong>数据集市</strong></p>
+<h3 id="2-11-33-数据集市概念"><a href="#2-11-33-数据集市概念" class="headerlink" title="2.11.33 数据集市概念"></a>2.11.33 数据集市概念</h3><ul>
+<li><p>建立数据集市的原因 </p>
+<p>数据仓库是一种反映主题的全局性数据组织。但是，全局性数据仓库往往太大，在实际应用中将它们按部门或个人分别建立反映各个子主题的局部性数据 组织,它们即是数据集市。因此，有时我们也称它为部门数据仓库。 </p>
+</li>
+<li><p>例：在有关商品销售的数据仓库中可以建立多 个不同主题的数据集市： </p>
+<ul>
+<li>商品采购数据集市 </li>
+<li>库房使用数据集市  </li>
+<li>商品销售数据集市</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-11-34-集市分类"><a href="#2-11-34-集市分类" class="headerlink" title="2.11.34 集市分类"></a>2.11.34 集市分类</h3><ul>
+<li>按照数据获取来源： <ul>
+<li>独立型：直接从操作型环境获取数据 </li>
+<li>从属型：从企业级数据仓库获取数据</li>
+</ul>
+</li>
+</ul>
+<p>从属集市和独立集市如下图：</p>
+<p><img src="/.com//dw09.jpg" alt="img"></p>
+<ul>
+<li>集市建设途径分为如下两种：<ul>
+<li>从 全局数据仓库 到 数据集市 </li>
+<li>从 数据集市 到 全局数据仓库</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-11-35-集市和主题的区别"><a href="#2-11-35-集市和主题的区别" class="headerlink" title="2.11.35 集市和主题的区别"></a>2.11.35 集市和主题的区别</h3><ul>
+<li><p>数据仓库与数据集市的关系类似于传统关系数据库系统中的基表与视图的关系。 </p>
+</li>
+<li><p>数据集市的数据来自数据仓库，它是数据仓库中数据的一个部分与局部，是一个数据的再抽取与组织的过程。</p>
+<p>具体区别如下：</p>
+<p><img src="/.com//dw10.jpg" alt="img"></p>
+</li>
+</ul>
+<p><strong>数据粒度</strong></p>
+<h3 id="2-11-36-数据粒度定义"><a href="#2-11-36-数据粒度定义" class="headerlink" title="2.11.36 数据粒度定义"></a>2.11.36 数据粒度定义</h3><ul>
+<li><font color="red">粒度</font>是指数据仓库的数据单位中保存数据 的细化或综合程度的级别。 </li>
+<li>粒度影响存放在数据仓库中的<font color="red">数据量的大 小</font>，同时影响数据仓库所能回答查询问题 的细节程度，是设计数据仓库的一个最重 要方面。 </li>
+</ul>
+<h3 id="2-11-37-数据粒度分类"><a href="#2-11-37-数据粒度分类" class="headerlink" title="2.11.37 数据粒度分类"></a>2.11.37 数据粒度分类</h3><ul>
+<li><p>粒度可以分为两种形式： </p>
+<ul>
+<li><p>按时间段综合数据的粒度 </p>
+</li>
+<li><p>按采样率高低划分的样本数据库</p>
+<p>按时间划分:</p>
+<p>早期细节级粒度</p>
+<p>当前细节级粒度</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-11-38-数据粒度例子"><a href="#2-11-38-数据粒度例子" class="headerlink" title="2.11.38 数据粒度例子"></a>2.11.38 数据粒度例子</h3><p>数据粒度的一个例子：</p>
+<p><img src="/.com//dw11.jpg" alt="img"></p>
+<p>高细节级粒度：</p>
+<p><img src="/.com//dw12.jpg" alt="img"></p>
+<p>低细节级粒度：</p>
+<p><img src="/.com//dw13.jpg" alt="img"></p>
+<h3 id="2-11-39粗粒度和细粒度的权衡"><a href="#2-11-39粗粒度和细粒度的权衡" class="headerlink" title="2.11.39粗粒度和细粒度的权衡"></a>2.11.39粗粒度和细粒度的权衡</h3><p><img src="/.com//dw14.jpg" alt="img"></p>
+<p><strong>数仓分层</strong></p>
+<h3 id="2-11-40-分层概念"><a href="#2-11-40-分层概念" class="headerlink" title="2.11.40 分层概念"></a>2.11.40 分层概念</h3><p>​    数据仓库更多代表的是一种对数据的管理和使用的方式，它是一整套包括了etl、调度、建模在内的完整的理论体系流程。数据仓库在构建过程中通常都需要进行分层处理。业务不同，分层的技术处理手段也不同。</p>
+<p>​    分层的主要原因是在管理数据的时候，能对数据有一个更加清晰的掌控。详细来讲，主要有下面几个原因：</p>
+<ul>
+<li><p>清晰数据结构</p>
+<p>每一个数据分层都有它的作用域，这样我们在使用表的时候能更方便地定位和理解。</p>
+</li>
+<li><p>数据血缘追踪</p>
+<p>简单来说，我们最终给业务呈现的是一个能直接使用业务表，但是它的来源有很多，如果有一张来源表出问题了，我们希望能够快速准确地定位到问题，并清楚它的危害范围。</p>
+</li>
+<li><p>减少重复开发</p>
+<p>规范数据分层，开发一些通用的中间层数据，能够减少极大的重复计算。</p>
+</li>
+<li><p>把复杂问题简单化</p>
+<p>将一个复杂的任务分解成多个步骤来完成，每一层只处理单一的步骤，比较简单和容易理解。而且便于维护数据的准确性，当数据出现问题之后，可以不用修复所有的数据，只需要从有问题的步骤开始修复。</p>
+</li>
+<li><p>屏蔽原始数据的异常</p>
+</li>
+<li><p>屏蔽业务的影响，不必改一次业务就需要重新接入数据</p>
+</li>
+</ul>
+<h3 id="2-11-41-常见分层"><a href="#2-11-41-常见分层" class="headerlink" title="2.11.41 常见分层"></a>2.11.41 常见分层</h3><p>数仓的常见分层一般为3层，分别为：数据操作层、数据仓库层和数据集市层。当然根据研发人员经验或者业务，可以分为更多不同的层，只要能达到流程清晰、方便查数即可。</p>
+<h3 id="2-11-42-ODS"><a href="#2-11-42-ODS" class="headerlink" title="2.11.42 ODS"></a>2.11.42 ODS</h3><p>​    Operate data store，操作数据存储，是最接近数据源中数据的一层，数据源中的数据，经过抽取、洗净、传输，也就说传说中的ETL之后，装入本层。本层的数据，总体上大多是按照源头业务系统的分类方式而分类的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如这一层可能包含的数据表可为：人口表（包含每个人的身份证号、姓名、性别、年龄、住址等）、机场登机记录（包含乘机人身份证号、航班号、乘机日期、起飞城市等）、银联的刷卡信息表（包含银行卡号、刷卡地点、刷卡时间、刷卡金额等）、银行账户表（包含银行卡号、持卡人身份证号等）等等一系列原始的业务数据。这里我们可以看到，这一层面的数据还具有鲜明的业务数据库的特征，甚至还具有一定的关系数据库中的数据范式的组织形式。</span><br></pre></td></tr></table></figure>
+
+<p>​    但是，这一层面的数据却不完全等同于原始数据。在源数据装入这一层时，根据业务不同，可能会进行诸如去噪（例如去掉明显偏离正常水平的银行刷卡信息）、去重（例如银行账户信息、公安局人口信息中均含有人的姓名，但是只保留一份即可）、提脏（例如有的人的银行卡被盗刷，在十分钟内同时有两笔分别在中国和日本的刷卡信息，这便是脏数据）、业务提取、单位统一、砍字段（例如用于支撑前端系统工作，但是在数据挖掘中不需要的字段）、业务判别等多项工作。</p>
+<p><font color="red">ODS层数据的来源方式</font>：</p>
+<ul>
+<li><p>业务库</p>
+<p>经常会使用sqoop来抽取，比如我们每天定时抽取一次。在实时方面，可以考虑用canal监听mysql的binlog，实时接入即可。</p>
+</li>
+<li><p>埋点日志</p>
+<p>线上系统会打入各种日志，这些日志一般以文件的形式保存，我们可以选择用flume定时抽取，也可以用用spark streaming或者storm来实时接入，当然，kafka也会是一个关键的角色。</p>
+</li>
+<li><p>其它数据源</p>
+<p>不同的业务其它数据源不一样,比如第三方数据。</p>
+</li>
+</ul>
+<h3 id="2-11-43-DW"><a href="#2-11-43-DW" class="headerlink" title="2.11.43 DW"></a>2.11.43 DW</h3><p>​    Data warehouse，数据仓库层。在这里，从ODS层中获得的数据按照主题建立各种数据模型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如以研究人的旅游消费为主题的数据集中,便可以结合航空公司的登机出行信息，以及银联系统的刷卡记录，进行结合分析，产生数据集。在这里，我们需要了解四个概念：维（dimension）、事实（Fact）、指标（Index）和粒度（ Granularity）。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-11-44-集市层DM"><a href="#2-11-44-集市层DM" class="headerlink" title="2.11.44 集市层DM"></a>2.11.44 集市层DM</h3><p>​    该层主要是提供数据产品和数据分析使用的数据，一般会存放在es、mysql等系统中供线上系统使用，也可能会存在Hive或者Druid中供数据分析和数据挖掘使用。 比如我们经常说的报表数据，或者说那种大宽表，一般就放在这里。</p>
+<p><font color="red">注意</font>:</p>
+<p>每个分层不是必须要用ODS、DW、DM等字样来标识，可以随便起名字，只要统一这一层是什么类型数据，名字符合知名知意即可。</p>
+<h3 id="2-11-45-维度层"><a href="#2-11-45-维度层" class="headerlink" title="2.11.45 维度层"></a>2.11.45 维度层</h3><p>​    针对存在度量值的表创建维度表，来从各个角度描述事实表。而一个项目中可能有很多张维度表，那我们可以选择将这些维度表放到单独的一个库中，形成维度库，即可看成是维度层，意在让数仓数据清晰明了。</p>
+<p><strong>实维表</strong></p>
+<h3 id="2-11-46-维度定义"><a href="#2-11-46-维度定义" class="headerlink" title="2.11.46 维度定义"></a>2.11.46 维度定义</h3><p>维度：看成观察数据的角度。</p>
+<p>维度表：维度表可以看成是用户用来分析一个事实的窗口，它里面的数据应该是对事实的各个方面描述，比如时间维度表，它里面的数据就是一些日，周，月，季，年，日期等数据，维度表只能是事实表的一个分析角度。</p>
+<h3 id="2-11-47-分层维度"><a href="#2-11-47-分层维度" class="headerlink" title="2.11.47 分层维度"></a>2.11.47 分层维度</h3><p>外链维表：有的维度是多个方向描述，此时可将多个维度分层级，形成规范的三范式。比如：地域维度，可能分层国家、省、市等三个维度，而将国家形成一个维度表、将省形成一个维度表、将市形成一个维度表，其中省、市维度表就是外链维度表。外链维表典型的就是雪花模型。</p>
+<h3 id="2-11-48-半维半实"><a href="#2-11-48-半维半实" class="headerlink" title="2.11.48 半维半实"></a>2.11.48 半维半实</h3><p>既可以看着是维度表，也可以看着是事实的表，可以称之为半维半实，比如：订单表。</p>
+<h3 id="2-11-49-事实表"><a href="#2-11-49-事实表" class="headerlink" title="2.11.49 事实表"></a>2.11.49 事实表</h3><p>​    发生在现实世界中操作型事件，其产生的可度量数值，存储的表统称事实表。例如交易表</p>
+<p>一般有以下几种事实：</p>
+<ol>
+<li>可加、半可加、不可加事实  。可加，例如pv(点击量) ； 半可加，例如数值差额，uv(用户量)；不可加，例如比率。</li>
+<li>事实一致性。不同事实表中的事实，应保证事实的定义是相同的，且具有相同的命名，如果不兼容，则须用不同命名方式，便于应用。</li>
+<li>周期事实。某天、某周等周期性，周期内未发生过程，也会有null或0等事实；</li>
+<li>累计事实，开始与结束之间可预测步骤内的度量事件；</li>
+<li>无事实的事实，比如：某天学生参加课程的事件；</li>
+<li>聚集事实，聚合，提高查询性能；</li>
+<li>合并事实，同粒度表进行合并；</li>
+</ol>
+<h3 id="2-11-50-度量值"><a href="#2-11-50-度量值" class="headerlink" title="2.11.50 度量值"></a>2.11.50 度量值</h3><p>事实表中存储用于计算的指标的值。比如时间、价格、时长等等。注意度量值的单位统一。</p>
+<h3 id="2-11-51-数仓架构"><a href="#2-11-51-数仓架构" class="headerlink" title="2.11.51 数仓架构"></a>2.11.51 数仓架构</h3><p><strong>inmon架构</strong></p>
+<p><img src="/.com//dw17.png" alt="dw17"></p>
+<p><strong>kimball架构</strong></p>
+<p><img src="/.com//dw18.png" alt="dw18"></p>
+<p>inmon架构和kimball架构的区别就是inmon的数据仓库是三范式企业级数据仓库，kimball的数据库时多维企业级数据仓库。</p>
+<h3 id="2-11-52-数仓搭建步骤"><a href="#2-11-52-数仓搭建步骤" class="headerlink" title="2.11.52 数仓搭建步骤"></a>2.11.52 数仓搭建步骤</h3><p><strong>多维数据模型及建模过程</strong></p>
+<p>维度模型通常以一种被称为星型模式的方式构建，一般使用下面的过程构建维度模型：</p>
+<ul>
+<li><p>选择业务流程</p>
+</li>
+<li><p>声明粒度</p>
+</li>
+<li><p>确认维度</p>
+</li>
+<li><p>确认事实</p>
+</li>
+</ul>
+<p>1．选择业务流程</p>
+<p>确认哪些业务处理流程是数据仓库应该覆盖的，是维度方法的基础。因此，建模的第一个步骤是描述需要建模的业务流程。例如，需要了解和分析一个零售店的销售情况，那么与该零售店销售相关的所有业务流程都是需要关注的。为了描述业务流程，可以简单地使用纯文本将相关内容记录下来，或者使用“业务流程建模标注”（BPMN）方法，也可以使用统一建模语言（UML）或其他类似的方法。</p>
+<p>2．声明粒度</p>
+<p>确定了业务流程后，下一步是声明维度模型的粒度。这里的粒度用于确定事实中表示的是什么，例如，一个零售店的顾客在购物小票上的一个购买条目。在选择维度和事实前必须声明粒度，因为每个候选维度或事实必须与定义的粒度保持一致。在一个事实所对应的所有维度设计中强制实行粒度一致性是保证数据仓库应用性能和易用性的关键。从给定的业务流程获取数据时，原始粒度是最低级别的粒度。建议从原始粒度数据开始设计，因为原始记录能够满足无法预期的用户查询。汇总后的数据粒度对优化查询性能很重要，但这样的粒度往往不能满足对细节数据的查询需求。不同的事实可以有不同的粒度，但同一事实中不要混用多种不同的粒度。维度模型建立完成之后，还有可能因为获取了新的信息，而回到这步修改粒度级别。</p>
+<p>3．确认维度</p>
+<p>设计过程的第三步是确认模型的维度。维度的粒度必须和第二步所声明的粒度一致。维度表是事实表的基础，也说明了事实表的数据是从哪里采集来的。典型的维度都是名词，如日期、商店、库存等。维度表存储了某一维度的所有相关数据，例如，日期维度应该包括年、季度、月、周、日等数据。</p>
+<p>4．确认事实</p>
+<p>确认维度后，下一步也是维度模型四步设计法的最后一步，就是确认事实。这一步识别数字化的度量，构成事实表的记录。它是和系统的业务用户密切相关的，因为用户正是通过对事实表的访问获取数据仓库存储的数据。大部分事实表的度量都是数字类型的，可累加，可计算，如成本、数量、金额等。</p>
+<p><strong>Data</strong> <strong>Vault模型及建模过程(选学)</strong></p>
+<p>Data Vault是面向细节的，可追踪历史的，一组有连接关系的规范化的表的集合。这些表可以支持一个或多个业务功能。它是一种综合了第三范式（3NF）和星型模型优点的建模方法。其设计理念是要满足企业对灵活性、可扩展性、一致性和对需求的适应性要求，是一种专为企业级数据仓库量身定制的建模方式。它的建模步骤如下：</p>
+<p>1．设计中心表</p>
+<p>首先要确定企业数据仓库要涵盖的业务范围；其次要将业务范围划分为若干原子业务实体，比如客户、产品等；然后，从各个业务实体中抽象出能够唯一标识该实体的业务主键，该业务主键要在整个业务的生命周期内不会发生变化；最后，由该业务主键生成中心表。</p>
+<p>2．设计链接表</p>
+<p>链接表体现了中心表之间的业务关联。设计链接表，首先要熟悉各个中心表代表的业务实体之间的业务关系，可能是两个或者多个中心表之间的关系。根据业务需求，这种关系可以是1对1、1对多，或者多对多的。然后，从相互之间有业务关系的中心表中，提取出代表各自业务实体的中心表主键，这些主键将被加入到链接表中，组合构成该链接表的主键。同样出于技术的原因，需要增加代理键。</p>
+<p>在生成链接表的同时，要注意如果中心表之间有业务交易数据的话，就需要在链接表中保存交易数据，有两种方法，一是采用加权链接表，二是给链接表加上附属表来处理交易数据。</p>
+<p>3．设计附属表</p>
+<p>附属表包含了各个业务实体与业务关联的详细的上下文描述信息。设计附属表，首先要收集各个业务实体在提取业务主键后的其他信息，比如客户住址、产品价格等；由于同一业务实体的各个描述信息不具有稳定性，会经常发生变化，所以，在必要的时候，需要将变化频率不同的信息分隔开来，为一个中心表建立几个附属表，然后提取出该中心表的主键，作为描述该中心表的附属表的主键。当业务实体之间存在交易数据的时候，需要为没有加权的链接表设计附属表，也可以根据交易数据的不同变化情况设计多个附属表。</p>
+<p>4．设计必要的PIT表</p>
+<p>Point—In—Time表是由附属表派生而来的。如果一个中心表或者链接表设计有多个附属表的话，而为了访问数据方便，就有用到PIT表的可能。PIT表的主键也是由其所归属的中心表提取而来，该中心表有几个附属表，PIT表就至少应该有几个字段来存放各个附属表的变化对比时间。</p>
+<p><strong>建立Data Vault模型时应该参照如下的原则：</strong></p>
+<p>（1）关于中心表的原则</p>
+<p>中心表的主键不能够直接“伸入”到其他中心表里面。就是说，不存在父子关系的中心表。各个中心表之间的关系是平等的，这也正是Data Vault模型灵活性与扩展性之所在。</p>
+<p>中心表之间必须通过链接表相关联，通过链接表可以连接两个以上的中心表。</p>
+<p>必须至少有两个中心表才能产生一个有意义的链接表。</p>
+<p>中心表的主键总是“伸出去”的（到链接表或者附属表）。</p>
+<p>（2）关于链接表的原则</p>
+<p>链接表可以跟其他链接表相连。</p>
+<p>中心表和链接表都可以使用代理键。</p>
+<p>业务主键从来不会改变，就是说中心表的主键也即链接表的外键不会改变。</p>
+<p>（3）关于附属表的原则</p>
+<p>附属表必须是连接到中心表或者链接表上才会有确定的含义。</p>
+<p>附属表总是包含装载时间和失效时间，从而包含历史数据，并且没有重复的数据。</p>
+<p>由于数据信息的类型或者变化频率快慢的差别，描述信息的数据可能会被分隔到多个附属表中去。</p>
+<h1 id="二-数仓高级-选讲"><a href="#二-数仓高级-选讲" class="headerlink" title="二 数仓高级(选讲)"></a>二 数仓高级(选讲)</h1><h2 id="2-1-元数据管理"><a href="#2-1-元数据管理" class="headerlink" title="2.1 元数据管理"></a>2.1 元数据管理</h2><p>参考”元数据管理工具Atlas.md”文档</p>
+<h3 id="2-1-1-元数据管理介绍"><a href="#2-1-1-元数据管理介绍" class="headerlink" title="2.1.1 元数据管理介绍"></a>2.1.1 元数据管理介绍</h3><h3 id="2-1-2-元数据管理第三方工具apache-atlas"><a href="#2-1-2-元数据管理第三方工具apache-atlas" class="headerlink" title="2.1.2 元数据管理第三方工具apache atlas"></a>2.1.2 元数据管理第三方工具apache atlas</h3><h3 id="2-1-3-atlas工具的编译"><a href="#2-1-3-atlas工具的编译" class="headerlink" title="2.1.3 atlas工具的编译"></a>2.1.3 atlas工具的编译</h3><h3 id="2-1-4-atlas工具的安装"><a href="#2-1-4-atlas工具的安装" class="headerlink" title="2.1.4 atlas工具的安装"></a>2.1.4 atlas工具的安装</h3><h3 id="2-1-5-atlas的自带案例"><a href="#2-1-5-atlas的自带案例" class="headerlink" title="2.1.5 atlas的自带案例"></a>2.1.5 atlas的自带案例</h3><h3 id="2-1-6-atlas结合项目"><a href="#2-1-6-atlas结合项目" class="headerlink" title="2.1.6 atlas结合项目"></a>2.1.6 atlas结合项目</h3><h2 id="2-2-数据质量"><a href="#2-2-数据质量" class="headerlink" title="2.2 数据质量"></a>2.2 数据质量</h2><p>参考”数据质量工具griffin.md”</p>
+<h3 id="2-2-1-数据质量介绍"><a href="#2-2-1-数据质量介绍" class="headerlink" title="2.2.1 数据质量介绍"></a>2.2.1 数据质量介绍</h3><h3 id="2-2-2-数据质量工具-apache-griffin"><a href="#2-2-2-数据质量工具-apache-griffin" class="headerlink" title="2.2.2 数据质量工具 apache griffin"></a>2.2.2 数据质量工具 apache griffin</h3><h3 id="2-2-3-数据质量apache-griffin使用"><a href="#2-2-3-数据质量apache-griffin使用" class="headerlink" title="2.2.3 数据质量apache griffin使用"></a>2.2.3 数据质量apache griffin使用</h3><h2 id="2-3-血缘"><a href="#2-3-血缘" class="headerlink" title="2.3 血缘"></a>2.3 血缘</h2><p>参考”血缘.md”文档</p>
+<h3 id="2-3-1-血缘介绍"><a href="#2-3-1-血缘介绍" class="headerlink" title="2.3.1 血缘介绍"></a>2.3.1 血缘介绍</h3><h1 id="三-数仓工具-选讲"><a href="#三-数仓工具-选讲" class="headerlink" title="三 数仓工具(选讲)"></a>三 数仓工具(选讲)</h1><h2 id="3-1-PD"><a href="#3-1-PD" class="headerlink" title="3.1 PD"></a>3.1 PD</h2><h3 id="3-1-1-PD的安装"><a href="#3-1-1-PD的安装" class="headerlink" title="3.1.1 PD的安装"></a>3.1.1 PD的安装</h3><p>参考”powerdesigner”目录</p>
+<h3 id="3-1-2-项目创建"><a href="#3-1-2-项目创建" class="headerlink" title="3.1.2 项目创建"></a>3.1.2 项目创建</h3><h3 id="3-1-3-需求模型创建"><a href="#3-1-3-需求模型创建" class="headerlink" title="3.1.3 需求模型创建"></a>3.1.3 需求模型创建</h3><h3 id="3-1-4-物理模型创建"><a href="#3-1-4-物理模型创建" class="headerlink" title="3.1.4 物理模型创建"></a>3.1.4 物理模型创建</h3><h3 id="3-1-5-物理模型导成sql"><a href="#3-1-5-物理模型导成sql" class="headerlink" title="3.1.5 物理模型导成sql"></a>3.1.5 物理模型导成sql</h3><h2 id="3-2-DataX-暂不讲"><a href="#3-2-DataX-暂不讲" class="headerlink" title="3.2 DataX(暂不讲)"></a>3.2 DataX(暂不讲)</h2><p>参考”DataX”目录</p>
+<h3 id="3-2-1-DataX介绍"><a href="#3-2-1-DataX介绍" class="headerlink" title="3.2.1 DataX介绍"></a>3.2.1 DataX介绍</h3><h3 id="3-2-2-DataX异构数据源同步"><a href="#3-2-2-DataX异构数据源同步" class="headerlink" title="3.2.2 DataX异构数据源同步"></a>3.2.2 DataX异构数据源同步</h3><h2 id="3-3-Canal工具-暂不讲"><a href="#3-3-Canal工具-暂不讲" class="headerlink" title="3.3 Canal工具(暂不讲)"></a>3.3 Canal工具(暂不讲)</h2><p>参考”canal”目录</p>
+<h3 id="3-3-1-canal的介绍"><a href="#3-3-1-canal的介绍" class="headerlink" title="3.3.1 canal的介绍"></a>3.3.1 canal的介绍</h3><h3 id="3-3-2-canal的使用"><a href="#3-3-2-canal的使用" class="headerlink" title="3.3.2 canal的使用"></a>3.3.2 canal的使用</h3><h2 id="3-4-kettle"><a href="#3-4-kettle" class="headerlink" title="3.4 kettle"></a>3.4 kettle</h2><p><font color="red">参考 当前目录下kettle文档:</font></p>
+<p>./kettle/kettle入门.md</p>
+<h3 id="3-4-1-kettle介绍"><a href="#3-4-1-kettle介绍" class="headerlink" title="3.4.1 kettle介绍"></a>3.4.1 kettle介绍</h3><h3 id="3-4-2-kettle安装"><a href="#3-4-2-kettle安装" class="headerlink" title="3.4.2 kettle安装"></a>3.4.2 kettle安装</h3><h3 id="3-4-3-kettle的使用"><a href="#3-4-3-kettle的使用" class="headerlink" title="3.4.3 kettle的使用"></a>3.4.3 kettle的使用</h3><h1 id="四-数仓销售案例"><a href="#四-数仓销售案例" class="headerlink" title="四 数仓销售案例"></a>四 数仓销售案例</h1><p>参考”数仓示例2.0.docx”文档</p>
+<h2 id="4-1-业务分析"><a href="#4-1-业务分析" class="headerlink" title="4.1 业务分析"></a>4.1 业务分析</h2><h2 id="4-2-数据源识别"><a href="#4-2-数据源识别" class="headerlink" title="4.2 数据源识别"></a>4.2 数据源识别</h2><h2 id="4-3-数据映射"><a href="#4-3-数据映射" class="headerlink" title="4.3 数据映射"></a>4.3 数据映射</h2><h2 id="4-4-数据的ETL"><a href="#4-4-数据的ETL" class="headerlink" title="4.4 数据的ETL"></a>4.4 数据的ETL</h2><h2 id="4-5-自动化"><a href="#4-5-自动化" class="headerlink" title="4.5 自动化"></a>4.5 自动化</h2><h1 id="五-阿里开源数仓平台-暂不讲"><a href="#五-阿里开源数仓平台-暂不讲" class="headerlink" title="五 阿里开源数仓平台(暂不讲)"></a>五 阿里开源数仓平台(暂不讲)</h1><p>参考”阿里云平台”</p>
+<p>MaxCompute参考地址：</p>
+<p><a href="https://help.aliyun.com/document_detail/27803.html?spm=a2c4g.11186623.6.580.1be0e033y7UiXQ" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/27803.html?spm=a2c4g.11186623.6.580.1be0e033y7UiXQ</a></p>
+<p>E-mapreduce参考地址：</p>
+<p><a href="https://help.aliyun.com/document_detail/28080.html?spm=5176.cnemapreduce.0.0.36e43a1cBmjQeM" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/28080.html?spm=5176.cnemapreduce.0.0.36e43a1cBmjQeM</a></p>
+<p>实时计算参考地址：</p>
+<p><a href="https://help.aliyun.com/document_detail/70009.html?spm=a2c4g.11186623.6.576.41ce26f3cMRFT3" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/70009.html?spm=a2c4g.11186623.6.576.41ce26f3cMRFT3</a></p>
+<p>dataWorks-v2.0参考地址：</p>
+<p><a href="https://help.aliyun.com/document_detail/84669.html?spm=a2c0j.8205274.748145.2.494a154dx0a4oy" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/84669.html?spm=a2c0j.8205274.748145.2.494a154dx0a4oy</a></p>
+<h2 id="5-1-阿里云数仓平台基础概念"><a href="#5-1-阿里云数仓平台基础概念" class="headerlink" title="5.1 阿里云数仓平台基础概念"></a>5.1 阿里云数仓平台基础概念</h2><h2 id="5-2-阿里云平台组件介绍"><a href="#5-2-阿里云平台组件介绍" class="headerlink" title="5.2 阿里云平台组件介绍"></a>5.2 阿里云平台组件介绍</h2><h2 id="5-3-阿里云数仓的基础操作"><a href="#5-3-阿里云数仓的基础操作" class="headerlink" title="5.3 阿里云数仓的基础操作"></a>5.3 阿里云数仓的基础操作</h2>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/30/今天的收获/" rel="next" title="今天的收获">
+                  <i class="fa fa-chevron-left"></i> 今天的收获
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、数仓基础"><span class="nav-number">1.</span> <span class="nav-text">一、数仓基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-11-基础概念"><span class="nav-number">1.1.</span> <span class="nav-text">2.11 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数仓ETL"><span class="nav-number">1.1.1.</span> <span class="nav-text">数仓ETL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-12-数据的抽取-E"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.11.12 数据的抽取(E)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-16-数据清洗-数据转换-T"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.11.16 数据清洗(数据转换)(T)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据清洗流程："><span class="nav-number">1.1.4.</span> <span class="nav-text">数据清洗流程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-17-格式内容清洗"><span class="nav-number">1.1.5.</span> <span class="nav-text">2.11.17 格式内容清洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-18-缺失数据处理"><span class="nav-number">1.1.6.</span> <span class="nav-text">2.11.18 缺失数据处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-19-数据内容值错误处理"><span class="nav-number">1.1.7.</span> <span class="nav-text">2.11.19 数据内容值错误处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-20-关联性验证"><span class="nav-number">1.1.8.</span> <span class="nav-text">2.11.20 关联性验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-21-数据装载（L）"><span class="nav-number">1.1.9.</span> <span class="nav-text">2.11.21 数据装载（L）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-22-数据预装载"><span class="nav-number">1.1.10.</span> <span class="nav-text">2.11.22 数据预装载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-23-初始装载"><span class="nav-number">1.1.11.</span> <span class="nav-text">2.11.23 初始装载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-24-定期装载"><span class="nav-number">1.1.12.</span> <span class="nav-text">2.11.24 定期装载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-25-自动化"><span class="nav-number">1.1.13.</span> <span class="nav-text">2.11.25 自动化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-26-ETL的流程整合"><span class="nav-number">1.1.14.</span> <span class="nav-text">2.11.26 ETL的流程整合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-28星型模型"><span class="nav-number">1.1.15.</span> <span class="nav-text">2.11.28星型模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-29-雪花模型"><span class="nav-number">1.1.16.</span> <span class="nav-text">2.11.29 雪花模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-30-事实星座模型"><span class="nav-number">1.1.17.</span> <span class="nav-text">2.11.30 事实星座模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-31-星型模型和雪花模型区别"><span class="nav-number">1.1.18.</span> <span class="nav-text">2.11.31 星型模型和雪花模型区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-32-模型应用场景"><span class="nav-number">1.1.19.</span> <span class="nav-text">2.11.32 模型应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-33-数据集市概念"><span class="nav-number">1.1.20.</span> <span class="nav-text">2.11.33 数据集市概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-34-集市分类"><span class="nav-number">1.1.21.</span> <span class="nav-text">2.11.34 集市分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-35-集市和主题的区别"><span class="nav-number">1.1.22.</span> <span class="nav-text">2.11.35 集市和主题的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-36-数据粒度定义"><span class="nav-number">1.1.23.</span> <span class="nav-text">2.11.36 数据粒度定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-37-数据粒度分类"><span class="nav-number">1.1.24.</span> <span class="nav-text">2.11.37 数据粒度分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-38-数据粒度例子"><span class="nav-number">1.1.25.</span> <span class="nav-text">2.11.38 数据粒度例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-39粗粒度和细粒度的权衡"><span class="nav-number">1.1.26.</span> <span class="nav-text">2.11.39粗粒度和细粒度的权衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-40-分层概念"><span class="nav-number">1.1.27.</span> <span class="nav-text">2.11.40 分层概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-41-常见分层"><span class="nav-number">1.1.28.</span> <span class="nav-text">2.11.41 常见分层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-42-ODS"><span class="nav-number">1.1.29.</span> <span class="nav-text">2.11.42 ODS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-43-DW"><span class="nav-number">1.1.30.</span> <span class="nav-text">2.11.43 DW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-44-集市层DM"><span class="nav-number">1.1.31.</span> <span class="nav-text">2.11.44 集市层DM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-45-维度层"><span class="nav-number">1.1.32.</span> <span class="nav-text">2.11.45 维度层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-46-维度定义"><span class="nav-number">1.1.33.</span> <span class="nav-text">2.11.46 维度定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-47-分层维度"><span class="nav-number">1.1.34.</span> <span class="nav-text">2.11.47 分层维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-48-半维半实"><span class="nav-number">1.1.35.</span> <span class="nav-text">2.11.48 半维半实</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-49-事实表"><span class="nav-number">1.1.36.</span> <span class="nav-text">2.11.49 事实表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-50-度量值"><span class="nav-number">1.1.37.</span> <span class="nav-text">2.11.50 度量值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-51-数仓架构"><span class="nav-number">1.1.38.</span> <span class="nav-text">2.11.51 数仓架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-52-数仓搭建步骤"><span class="nav-number">1.1.39.</span> <span class="nav-text">2.11.52 数仓搭建步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-数仓高级-选讲"><span class="nav-number">2.</span> <span class="nav-text">二 数仓高级(选讲)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-元数据管理"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 元数据管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-元数据管理介绍"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 元数据管理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-元数据管理第三方工具apache-atlas"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 元数据管理第三方工具apache atlas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-atlas工具的编译"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 atlas工具的编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-atlas工具的安装"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 atlas工具的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-atlas的自带案例"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.5 atlas的自带案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-6-atlas结合项目"><span class="nav-number">2.1.6.</span> <span class="nav-text">2.1.6 atlas结合项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-数据质量"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 数据质量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-数据质量介绍"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 数据质量介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-数据质量工具-apache-griffin"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 数据质量工具 apache griffin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-数据质量apache-griffin使用"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 数据质量apache griffin使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-血缘"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 血缘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-血缘介绍"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 血缘介绍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-数仓工具-选讲"><span class="nav-number">3.</span> <span class="nav-text">三 数仓工具(选讲)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-PD"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 PD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-PD的安装"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 PD的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-项目创建"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 项目创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-需求模型创建"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3 需求模型创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-物理模型创建"><span class="nav-number">3.1.4.</span> <span class="nav-text">3.1.4 物理模型创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-5-物理模型导成sql"><span class="nav-number">3.1.5.</span> <span class="nav-text">3.1.5 物理模型导成sql</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-DataX-暂不讲"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 DataX(暂不讲)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-DataX介绍"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 DataX介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-DataX异构数据源同步"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 DataX异构数据源同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-Canal工具-暂不讲"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Canal工具(暂不讲)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-canal的介绍"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 canal的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-canal的使用"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 canal的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-kettle"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 kettle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-1-kettle介绍"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 kettle介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-2-kettle安装"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 kettle安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-3-kettle的使用"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 kettle的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-数仓销售案例"><span class="nav-number">4.</span> <span class="nav-text">四 数仓销售案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-业务分析"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 业务分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-数据源识别"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 数据源识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-数据映射"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 数据映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-数据的ETL"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 数据的ETL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-自动化"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 自动化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五-阿里开源数仓平台-暂不讲"><span class="nav-number">5.</span> <span class="nav-text">五 阿里开源数仓平台(暂不讲)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-阿里云数仓平台基础概念"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 阿里云数仓平台基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-阿里云平台组件介绍"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 阿里云平台组件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-阿里云数仓的基础操作"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 阿里云数仓的基础操作</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg"
+      alt="Coder君">
+  <p class="site-author-name" itemprop="name">Coder君</p>
+  <div class="site-description" itemprop="description">欢迎您的到来！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=523042017&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Coder君</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</html>
