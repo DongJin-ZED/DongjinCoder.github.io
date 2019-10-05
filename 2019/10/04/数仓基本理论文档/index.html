@@ -62,30 +62,10 @@
 <meta property="og:site_name" content="Coder君博客">
 <meta property="og:description" content="数仓的基本理论">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/.com//dw15.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw1.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw02.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw03.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw04.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw05.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw05.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw16.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw06.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw07.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw08.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw09.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw10.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw11.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw12.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw13.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw14.jpg">
-<meta property="og:image" content="http://yoursite.com/.com//dw17.png">
-<meta property="og:image" content="http://yoursite.com/.com//dw18.png">
-<meta property="og:updated_time" content="2019-10-04T06:04:46.163Z">
+<meta property="og:updated_time" content="2019-10-05T03:01:50.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数仓基本理论">
 <meta name="twitter:description" content="数仓的基本理论">
-<meta name="twitter:image" content="http://yoursite.com/.com//dw15.jpg">
   <link rel="canonical" href="http://yoursite.com/2019/10/04/数仓基本理论文档/">
 
 
@@ -256,11 +236,19 @@
                 
               
 
-              <time title="创建时间：2019-10-04 10:21:44 / 修改时间：14:04:46" itemprop="dateCreated datePublished" datetime="2019-10-04T10:21:44+08:00">2019-10-04</time>
+              <time title="创建时间：2019-10-04 10:21:44" itemprop="dateCreated datePublished" datetime="2019-10-04T10:21:44+08:00">2019-10-04</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-05 11:01:50" itemprop="dateModified" datetime="2019-10-05T11:01:50+08:00">2019-10-05</time>
+              </span>
             
           
 
@@ -393,7 +381,7 @@
 <li>数据不一样。</li>
 </ul>
 <p>对比如下：</p>
-<p><img src="/.com//dw15.jpg" alt="img"></p>
+<p>![img]</p>
 <p><strong>数仓模型</strong></p>
 <p>###2.11.7 <strong>概念模型(CDM)</strong></p>
 <p>​    概念数据模型主要用来描述现实世界的概念化结构，是对需求进行综合、归纳和抽象之后，形成的一个独立于具体数据库管理软件的模型。概念书模型的设计以实体-联系（E-R）模型为基础，按用户的观点对系统所需数据建模。它能够让数据库设计人员的初始阶段百通计算机系统和DBMS的具体技术问题，集中精力分析数据及其相互关系等。目标是同意业务概念，作为业务人员和技术人员之间沟通的桥梁。</p>
@@ -413,7 +401,7 @@
 <h3 id="2-11-12-数据的抽取-E"><a href="#2-11-12-数据的抽取-E" class="headerlink" title="2.11.12 数据的抽取(E)"></a>2.11.12 数据的抽取(E)</h3><p>将数据从源拉去到目标地，拉去过程中可能对数据有一定操作，即完成数据的抽取。</p>
 <p>###2.11.13 增量抽取</p>
 <p>​    Sqoop提供增量导入模式，用于只导入新的数据行, Sqoop支持两种类型的增量导入：append和lastmodified。可以使用–incremental参数指定增量导入的类型。</p>
-<p><img src="/.com//dw1.png" alt="img"> </p>
+<p>![img]</p>
 <p>​    Sqoop支持两种类型的增量导入：append和lastmodified。可以使用–incremental参数指定增量导入的类型。</p>
 <p>当被导入表的新行具有持续递增的行id值时，应该使用append模式。指定行id为–check-column的列。Sqoop导入那些被检查列的值比–last-value给出最大的数据行。</p>
 <p>​    Sqoop支持的另一个表修改策略叫做lastmodified模式。当源表的数据行可能被修改，并且每次修改都会更新一个last-modified列为当前时间戳时，应该使用lastmodified模式。那些被检查列的时间戳比–last-value给出的时间戳新的数据行被导入。</p>
@@ -446,21 +434,21 @@
 </ol>
 <p>最复杂和最没有入侵的CDC方式就是基于日志的方式。数据库会把每个插入、更新和删除操作记录在日志里。只要在数据库中开启事务日志，再将日志读取出来，就可以还原这部分变化数据了。例如在mysql中，启用log_bin日志，并使用mysqlbinlog工具读取出来</p>
 <p>首先查看一下是否开启了二进制日志：SHOW VARIABLES LIKE ‘%log_bin%’</p>
-<p><img src="/.com//dw02.png" alt="img"> </p>
+<p>![img] </p>
 <p>off没有开启，开启步骤如下</p>
 <p>1 找到mysql的配置文件，my.cnf一般在/etc，在[mysqld]下面添加log-bin= /var/log/mysql-bin，重启mysql服务</p>
-<p><img src="/.com//dw03.png" alt="img"> </p>
+<p>![img]</p>
 <p>on变为开启</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">插入一条数据</span><br><span class="line"></span><br><span class="line">INSERT INTO dim_date VALUES (NULL,&apos;2050-01-02&apos;,1,&apos;January&apos;,1,2050)</span><br><span class="line"></span><br><span class="line">查看当前日志</span><br><span class="line"></span><br><span class="line">show master status; 或者 SHOW MASTER LOGS;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/.com//dw04.png" alt="img"> </p>
+<p>![img]</p>
 <p>查看日志，在shell下执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog --start-position=0  mysql-bin.000001 | mysql -uroot -p123456</span><br><span class="line"></span><br><span class="line">把日志文件输出到文本文件中</span><br><span class="line"></span><br><span class="line">mysqlbinlog –start-date=’2018-11-25’ –end-date=’2018-11-26’ mysql-bin.000001 &gt; /tmp/000001.txt</span><br></pre></td></tr></table></figure>
 
 <p>执行文本文件的sql语句就可以了。基于日志的CDC也有缺陷，即只能用来处理一种特定的数据库。</p>
 <h3 id="2-11-16-数据清洗-数据转换-T"><a href="#2-11-16-数据清洗-数据转换-T" class="headerlink" title="2.11.16 数据清洗(数据转换)(T)"></a>2.11.16 数据清洗(数据转换)(T)</h3><p>​    数据转换是将数据进行重构以及标准化，消除数据的不一致，处理缺失数据，转换最主要的任务就是数据清洗。数据清洗是对数据进行重新审查和校验的过程，目的在于删除重复信息，纠正存在的错误，并提供数据一致性。我们说数据仓库的数据源是多个业务系统，各来源的数据存在着差异和和冲突，也就是我们所说的脏数据，按照一定的规则处理脏数据的过程就是数据清洗。</p>
 <p>​    在做数据清洗的时候首先要进行清洗流程分析和设计，找到数据的主要问题和特征，画逻辑图，类似下图，将每步操作都清楚记录下来，方便项目组内的各人员的分工合作以及问题追踪</p>
-<p><img src="/.com//dw05.png" alt="1556420944413"></p>
+<p>![1556420944413]</p>
 <h3 id="数据清洗流程："><a href="#数据清洗流程：" class="headerlink" title="数据清洗流程："></a>数据清洗流程：</h3><p><font color="red">预处理</font>：对于大的数据文件的加载，特别是新的文件，要进行预先诊断和尖刺，不能贸然加载。</p>
 <p><font color="red">标准化处理</font>：建立标准化对照表，将不一致的数据进行统一，一般需要建立标准码表，建立与标准值转化有关的函数和子程序，建立标准值与非标准值对照的映像表</p>
 <p><font color="red">去重处理</font>：一种是整行数据完全重复，这种可以通过SQL语句达到去重，使用distinct或者group by 进行处理，还有一种是有重复的字段，这种一般需要子查询来进行处理，但是需要跟业务方进行确认如何保留去重数据的规则，数据清洗是一个反复的过程，需要不断的发现问题，解决问题。对于是否过滤，是否修正一般要求业务方确认，对于过滤掉的数据，写入Excel文件或者将过滤数据写入数据表，在ETL开发的初期可以每天向业务单位发送过滤数据的邮件，促使他们尽快地修正错误,同时也可以做为将来验证数据的依据。数据清洗需要注意的是不要将有用的数据过滤掉，对于每个过滤规则认真进行验证，并要业务方确认。</p>
@@ -480,7 +468,7 @@
 <h3 id="2-11-18-缺失数据处理"><a href="#2-11-18-缺失数据处理" class="headerlink" title="2.11.18 缺失数据处理"></a>2.11.18 缺失数据处理</h3><p>缺失值的处理是很常规的操作，可以按照一下步骤进行:</p>
 <ol>
 <li><p>确定缺失值范围：对每个字段都计算其缺失值比例，然后按照缺失比例和字段重要性，分别制定策略，可用下图表示：</p>
-<p><img src="/.com//dw05.jpg" alt="1556420944413"></p>
+<p>![1556420944413]</p>
 </li>
 <li><p>去除不需要的字段：这一步很简单，直接删掉即可，但强烈建议清洗每做一步都备份一下，或者在小规模数据上试验成功再处理全量数据，不然删错了会追悔莫及(多说一句，写SQL的时候delete一定要配where!)。</p>
 </li>
@@ -519,7 +507,7 @@
 <h3 id="2-11-26-ETL的流程整合"><a href="#2-11-26-ETL的流程整合" class="headerlink" title="2.11.26 ETL的流程整合"></a>2.11.26 ETL的流程整合</h3><p>​    ETL系统需要能够在限定的时间内完成对日常数据的周期性的自动加载流程，支持对初始数据及历史数据的加载，并满足未来扩充的要求。数据仓库系统的数十个目标数据表和相应数量的数据源意味着ETL程序的复杂性，庞大的数据量则需要充分考虑系统运行的效率，为开发复杂的程序，就要求灵活而简单明了的程序结构，而程序的效率要求的优化又往往需要针对不同数据的个性化设计，因此，ETL的设计必须在开发的可管理性和程序性能之间平衡，有些实现复杂、个性化突出的做法就要让位于要求一致的程序结构。这样的平衡是本设计中很重要的一个考虑因素。</p>
 <p>​    在基于此设计思路的ETL架构下，每个数据表的ETL过程按照ETL的特性统一为3个标准步骤，即数据抽取/变换 (Extract/Convert)、数据转换(Transform)和数据加载（Load），所有数据的ETL都被纳入到这个标准框架中，因此，所有需开发的ETL程序的流程也就被对应分为3个主要的步骤, 每个步骤需要记录完整的处理中间状态及完善的日志信息，对于程序员来说明，遵循统一的架构开发可以保证所有开发的程序的结构一致性，便于程序的管理，同时对于开发和测试人员来说，根据不同步骤的中间状态记录及日志信息很容易定位及修正程序的bug。</p>
 <p>###2.11.27 ETL的流程示例</p>
-<p><img src="/.com//dw16.jpg" alt="1556420944413"></p>
+<p>![1556420944413]</p>
 <p>该过程为一个完整的etl流程，其中pn为其中的步骤。</p>
 <p><strong>数据模型</strong></p>
 <p>在说数据模型前，先说说数据存储，数据存储方式有如下几种：</p>
@@ -573,7 +561,7 @@
 <li><p>这种结构使用户能够很容易地从维度表中的数 据分析开始，获得维度关键字，以便连接到中 心的事实表，进行查询。</p>
 </li>
 <li><p>星型模型示例：</p>
-<p><img src="/.com//dw06.jpg" alt="img"></p>
+<p>![img]</p>
 </li>
 </ul>
 <h3 id="2-11-29-雪花模型"><a href="#2-11-29-雪花模型" class="headerlink" title="2.11.29 雪花模型"></a>2.11.29 雪花模型</h3><ul>
@@ -582,14 +570,14 @@
 <li><p>在这种模式中，维度表除了具有星形模型 中维度表的功能外，还连接对事实表进行 详细描述的详细类别表，详细类别表通过对事实表在有关维上的详细描述达到了缩小事实表和提高查询效率的目的。</p>
 </li>
 <li><p>雪花模型示例:</p>
-<p><img src="/.com//dw07.jpg" alt="img"></p>
+<p>![img]</p>
 </li>
 </ul>
 <h3 id="2-11-30-事实星座模型"><a href="#2-11-30-事实星座模型" class="headerlink" title="2.11.30 事实星座模型"></a>2.11.30 事实星座模型</h3><ul>
 <li><p>一个复杂的商业智能应用往往会在数据仓 库中存放多个事实表，这时就会出现多个 事实表共享某一个或多个维表的情况，这 就是事实星座，也称为星系模型(galaxy  schema)。</p>
 </li>
 <li><p>事实星座模型示例：</p>
-<p><img src="/.com//dw08.jpg" alt="img"></p>
+<p>![img]</p>
 </li>
 </ul>
 <h3 id="2-11-31-星型模型和雪花模型区别"><a href="#2-11-31-星型模型和雪花模型区别" class="headerlink" title="2.11.31 星型模型和雪花模型区别"></a>2.11.31 星型模型和雪花模型区别</h3><ul>
@@ -620,7 +608,7 @@
 </li>
 </ul>
 <p>从属集市和独立集市如下图：</p>
-<p><img src="/.com//dw09.jpg" alt="img"></p>
+<p>![img]</p>
 <ul>
 <li>集市建设途径分为如下两种：<ul>
 <li>从 全局数据仓库 到 数据集市 </li>
@@ -633,7 +621,7 @@
 </li>
 <li><p>数据集市的数据来自数据仓库，它是数据仓库中数据的一个部分与局部，是一个数据的再抽取与组织的过程。</p>
 <p>具体区别如下：</p>
-<p><img src="/.com//dw10.jpg" alt="img"></p>
+<p>![img]</p>
 </li>
 </ul>
 <p><strong>数据粒度</strong></p>
@@ -655,12 +643,12 @@
 </li>
 </ul>
 <h3 id="2-11-38-数据粒度例子"><a href="#2-11-38-数据粒度例子" class="headerlink" title="2.11.38 数据粒度例子"></a>2.11.38 数据粒度例子</h3><p>数据粒度的一个例子：</p>
-<p><img src="/.com//dw11.jpg" alt="img"></p>
+<p>![img]</p>
 <p>高细节级粒度：</p>
-<p><img src="/.com//dw12.jpg" alt="img"></p>
+<p>![img]</p>
 <p>低细节级粒度：</p>
-<p><img src="/.com//dw13.jpg" alt="img"></p>
-<h3 id="2-11-39粗粒度和细粒度的权衡"><a href="#2-11-39粗粒度和细粒度的权衡" class="headerlink" title="2.11.39粗粒度和细粒度的权衡"></a>2.11.39粗粒度和细粒度的权衡</h3><p><img src="/.com//dw14.jpg" alt="img"></p>
+<p>![img]</p>
+<h3 id="2-11-39粗粒度和细粒度的权衡"><a href="#2-11-39粗粒度和细粒度的权衡" class="headerlink" title="2.11.39粗粒度和细粒度的权衡"></a>2.11.39粗粒度和细粒度的权衡</h3><p>![img]</p>
 <p><strong>数仓分层</strong></p>
 <h3 id="2-11-40-分层概念"><a href="#2-11-40-分层概念" class="headerlink" title="2.11.40 分层概念"></a>2.11.40 分层概念</h3><p>​    数据仓库更多代表的是一种对数据的管理和使用的方式，它是一整套包括了etl、调度、建模在内的完整的理论体系流程。数据仓库在构建过程中通常都需要进行分层处理。业务不同，分层的技术处理手段也不同。</p>
 <p>​    分层的主要原因是在管理数据的时候，能对数据有一个更加清晰的掌控。详细来讲，主要有下面几个原因：</p>
@@ -724,9 +712,9 @@
 </ol>
 <h3 id="2-11-50-度量值"><a href="#2-11-50-度量值" class="headerlink" title="2.11.50 度量值"></a>2.11.50 度量值</h3><p>事实表中存储用于计算的指标的值。比如时间、价格、时长等等。注意度量值的单位统一。</p>
 <h3 id="2-11-51-数仓架构"><a href="#2-11-51-数仓架构" class="headerlink" title="2.11.51 数仓架构"></a>2.11.51 数仓架构</h3><p><strong>inmon架构</strong></p>
-<p><img src="/.com//dw17.png" alt="dw17"></p>
+<p>![dw17]</p>
 <p><strong>kimball架构</strong></p>
-<p><img src="/.com//dw18.png" alt="dw18"></p>
+<p>![dw18]</p>
 <p>inmon架构和kimball架构的区别就是inmon的数据仓库是三范式企业级数据仓库，kimball的数据库时多维企业级数据仓库。</p>
 <h3 id="2-11-52-数仓搭建步骤"><a href="#2-11-52-数仓搭建步骤" class="headerlink" title="2.11.52 数仓搭建步骤"></a>2.11.52 数仓搭建步骤</h3><p><strong>多维数据模型及建模过程</strong></p>
 <p>维度模型通常以一种被称为星型模式的方式构建，一般使用下面的过程构建维度模型：</p>
@@ -798,6 +786,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/05/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
