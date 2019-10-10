@@ -62,13 +62,13 @@
 <meta property="og:site_name" content="Code君博客">
 <meta property="og:description" content="数据仓库，英文名称为Data Warehouse，可简写为DW或DWH。数据仓库，是为企业所有级别的决策制定过程，提供所有类型数据支持的战略集合。它是单个数据存储，出于分析性报告和决策支持目的而创建。 为需要业务智能的企业，提供指导业务流程改进、监视时间、成本、质量以及控制。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/.com//page1.png">
-<meta property="og:image" content="http://yoursite.com/.com//page2.png">
-<meta property="og:updated_time" content="2019-10-05T09:04:18.698Z">
+<meta property="og:image" content="http://yoursite.com/images/page1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/page2.png">
+<meta property="og:updated_time" content="2019-10-05T09:32:58.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据仓库分层">
 <meta name="twitter:description" content="数据仓库，英文名称为Data Warehouse，可简写为DW或DWH。数据仓库，是为企业所有级别的决策制定过程，提供所有类型数据支持的战略集合。它是单个数据存储，出于分析性报告和决策支持目的而创建。 为需要业务智能的企业，提供指导业务流程改进、监视时间、成本、质量以及控制。">
-<meta name="twitter:image" content="http://yoursite.com/.com//page1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/page1.jpg">
   <link rel="canonical" href="http://yoursite.com/2019/10/05/数据仓库分层/">
 
 
@@ -239,7 +239,7 @@
                 
               
 
-              <time title="创建时间：2019-10-05 16:42:07 / 修改时间：17:04:18" itemprop="dateCreated datePublished" datetime="2019-10-05T16:42:07+08:00">2019-10-05</time>
+              <time title="创建时间：2019-10-05 16:42:07 / 修改时间：17:32:58" itemprop="dateCreated datePublished" datetime="2019-10-05T16:42:07+08:00">2019-10-05</time>
             </span>
           
             
@@ -262,10 +262,10 @@
 <a id="more"></a>
 
 <h2 id="数据仓库分层"><a href="#数据仓库分层" class="headerlink" title="数据仓库分层"></a>数据仓库分层</h2><h3 id="1-数据仓库的概念"><a href="#1-数据仓库的概念" class="headerlink" title="1 数据仓库的概念"></a>1 数据仓库的概念</h3><p>数据仓库，英文名称为Data Warehouse，可简写为DW或DWH。数据仓库，是为企业所有级别的决策制定过程，提供所有类型数据支持的战略集合。它是单个数据存储，出于分析性报告和决策支持目的而创建。 为需要业务智能的企业，提供指导业务流程改进、监视时间、成本、质量以及控制。</p>
-<p><img src="/.com//page1.png" alt></p>
+<p><img src="/images/page1.jpg" alt></p>
 <p>数据仓库，并不是数据的最终目的地，而是为数据最终的目的地做好准备。这些准备包括对数据的：清洗，转义，分类，重组，合并，拆分，统计等等。</p>
 <h3 id="2-为什么要对数仓进行分层"><a href="#2-为什么要对数仓进行分层" class="headerlink" title="2 为什么要对数仓进行分层"></a>2 为什么要对数仓进行分层</h3><p>1 把复杂问题简单化<br>将一个复杂的任务分解成多个步骤来完成，每一层只处理单一的步骤，比较简单和容易理解。<br>2 数据结构清晰<br>每一个数据分层都有它的作用域，这样我们在使用表的时候能更方便地定位和理解。<br>便于维护数据的准确性，当数据出现问题之后，可以不用修复所有的数据，只需要从有问题的步骤开始修复<br>3 提高数据的复用性<br>规范数据分层，通过的中间层数据，能够减少极大的重复计算，增加一次计算结果的复用性。<br>4 隔离原始数据<br>不论是数据的异常还是数据的敏感性，使真实数据与统计数据解耦开。</p>
-<h3 id="3-数仓分层结构图"><a href="#3-数仓分层结构图" class="headerlink" title="3 数仓分层结构图"></a>3 数仓分层结构图</h3><h4 id="数仓分层原理"><a href="#数仓分层原理" class="headerlink" title="数仓分层原理"></a>数仓分层原理</h4><p><img src="/.com//page2.png" alt></p>
+<h3 id="3-数仓分层结构图"><a href="#3-数仓分层结构图" class="headerlink" title="3 数仓分层结构图"></a>3 数仓分层结构图</h3><h4 id="数仓分层原理"><a href="#数仓分层原理" class="headerlink" title="数仓分层原理"></a>数仓分层原理</h4><p><img src="/images/page2.png" alt></p>
 <h4 id="ODS层"><a href="#ODS层" class="headerlink" title="ODS层"></a>ODS层</h4><p>原始数据层，存放原始数据，直接加载原始日志、数据，数据保持原貌不做处理</p>
 <h4 id="DWD层"><a href="#DWD层" class="headerlink" title="DWD层"></a>DWD层</h4><p>明细数据层<br>结构和粒度与ods层保持一致，对ods层数据进行清洗(去除空值，脏数据，超过极限范围的数据)，也有公司叫dwi。</p>
 <h4 id="DWS层"><a href="#DWS层" class="headerlink" title="DWS层"></a>DWS层</h4><p>服务数据层<br>以dwd为基础，进行轻度汇总。一般聚集到以用户当日，设备当日，商家当日，商品当日等等的粒度。<br>在这层通常会有以某一个维度为线索，组成跨主题的宽表，比如 一个用户的当日的签到数、收藏数、评论数、抽奖数、订阅数、点赞数、浏览商品数、添加购物车数、下单数、支付数、退款数、点击广告数组成的多列表。</p>
@@ -286,8 +286,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/05/hello-world/" rel="next" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
+                <a href="/2019/10/04/数仓基本理论文档/" rel="next" title="数仓基本理论">
+                  <i class="fa fa-chevron-left"></i> 数仓基本理论
                 </a>
               
             </div>
@@ -295,6 +295,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/10/使用Shell脚本开启-关闭集群服务/" rel="prev" title="使用Shell脚本开启/关闭集群服务">
+                  使用Shell脚本开启/关闭集群服务 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
