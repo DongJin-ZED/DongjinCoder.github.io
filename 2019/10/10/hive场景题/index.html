@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive场景题练习">
+<meta property="og:url" content="http://yoursite.com/2019/10/10/hive场景题/index.html">
+<meta property="og:site_name" content="Code君博客">
+<meta property="og:description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-10T09:56:50.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive场景题练习">
+<meta name="twitter:description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+  <link rel="canonical" href="http://yoursite.com/2019/10/10/hive场景题/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Hive场景题练习 | Code君博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Code君博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">www.DongjinCoder.cn</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/hive场景题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Code君">
+      <meta itemprop="description" content="不积跬步何以致千里">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code君博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Hive场景题练习
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-10 23:21:44 / 修改时间：17:56:50" itemprop="dateCreated datePublished" datetime="2019-10-10T23:21:44+08:00">2019-10-10</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>更新中ing…………………….</p><h1 id="Hive场景题"><a href="#Hive场景题" class="headerlink" title="Hive场景题"></a>Hive场景题</h1><h2 id="1-1-hive窗口函数"><a href="#1-1-hive窗口函数" class="headerlink" title="1.1 hive窗口函数"></a>1.1 hive窗口函数</h2><h4 id="1-1-4-编写连续7天登录的总人数"><a href="#1-1-4-编写连续7天登录的总人数" class="headerlink" title="1.1.4 编写连续7天登录的总人数"></a><strong>1.1.4</strong> <strong>编写连续7天登录的总人数</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">数据: t1表 </span><br><span class="line">Uid dt login_status(1登录成功,0异常) </span><br><span class="line">1 2019-07-11 1 </span><br><span class="line">1 2019-07-12 1 </span><br><span class="line">1 2019-07-13 1 </span><br><span class="line">1 2019-07-14 1 </span><br><span class="line">1 2019-07-15 1 </span><br><span class="line">1 2019-07-16 1 </span><br><span class="line">1 2019-07-17 1 </span><br><span class="line">1 2019-07-18 1 </span><br><span class="line">2 2019-07-11 1 </span><br><span class="line">2 2019-07-12 1 </span><br><span class="line">2 2019-07-13 0 </span><br><span class="line">2 2019-07-14 1 </span><br><span class="line">2 2019-07-15 1 </span><br><span class="line">2 2019-07-16 0 </span><br><span class="line">2 2019-07-17 1 </span><br><span class="line">2 2019-07-18 0 </span><br><span class="line">3 2019-07-11 1 </span><br><span class="line">3 2019-07-12 1 </span><br><span class="line">3 2019-07-13 1 </span><br><span class="line">3 2019-07-14 1 </span><br><span class="line">3 2019-07-15 1 </span><br><span class="line">3 2019-07-16 1 </span><br><span class="line">3 2019-07-17 1 </span><br><span class="line">3 2019-07-18 1</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<p>思路：应用了dateiff()函数 两个日期相减 </p>
+<p>select dateiff(dt,lag(dt,6) over(distribute by uid sort by dt)) from t1</p>
+<p>求用户有没有七天以上 </p>
+<p>然后 select dateiff(dt,lag(dt,6) over(distribute by uid sort by dt)) from t1 where login_status=1</p>
+<p>添加条件 用户在七天里的状态都必须为1 </p>
+<p>最好count一下 注意要distinct uid 条件是 登录的天数为6 也就是 dateiff（）函数 =6</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t1(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line">dt <span class="keyword">string</span>,</span><br><span class="line">login_status <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./t1.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t1;</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="keyword">distinct</span> a.uid)</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> uid,login_status,</span><br><span class="line"><span class="keyword">datediff</span>(dt,lag(dt,<span class="number">6</span>) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> uid <span class="keyword">sort</span> <span class="keyword">by</span> dt <span class="keyword">asc</span>)) b</span><br><span class="line"><span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">where</span> login_status=<span class="number">1</span>) a</span><br><span class="line"><span class="keyword">where</span> a.b=<span class="number">6</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 结果为 2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名"><a href="#1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名" class="headerlink" title="1.1.6 编写 sql  句实现每班前三名，分数一样并列，同时求出前三名"></a><strong>1.1.6</strong> <strong>编写</strong> <strong>sql</strong>  <strong>句实现每班前三名，分数一样并列，同时求出前三名</strong></h4><p><strong>按名次排序的一次的分差：</strong></p>
+<p>数据： stu表 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Stu_no class score </span><br><span class="line"></span><br><span class="line">1 1901 90 </span><br><span class="line"></span><br><span class="line">2 1901 90 </span><br><span class="line"></span><br><span class="line">3 1901 83 </span><br><span class="line"></span><br><span class="line">4 1901 60 </span><br><span class="line"></span><br><span class="line">5 1902 66 </span><br><span class="line"></span><br><span class="line">6 1902 23 </span><br><span class="line"></span><br><span class="line">7 1902 99 </span><br><span class="line"></span><br><span class="line">8 1902 67 </span><br><span class="line"></span><br><span class="line">9 1902 87</span><br></pre></td></tr></table></figure>
+
+<p>编写sql实现，结果如下：</p>
+<p>结果数据： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">班级 stu_no score rn rn1 rn_diff </span><br><span class="line"></span><br><span class="line">1901 1 90 1 1 90 </span><br><span class="line"></span><br><span class="line">1901 2 90 2 1 0 </span><br><span class="line"></span><br><span class="line">1901 3 83 3 1 -7 </span><br><span class="line"></span><br><span class="line">1902 7 99 1 1 99 </span><br><span class="line"></span><br><span class="line">1902 9 87 2 2 -12 </span><br><span class="line"></span><br><span class="line">1902 8 67 3 3 -20</span><br></pre></td></tr></table></figure>
+
+<p>思路：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> stu(</span><br><span class="line">Stu_no <span class="built_in">int</span>,</span><br><span class="line"><span class="keyword">class</span> <span class="built_in">int</span>,</span><br><span class="line">score <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./stu.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> stu;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> a.class <span class="keyword">as</span> <span class="string">`班级`</span>,a.stu_no,a.score,a.rn,</span><br><span class="line">score-nvl(lag(score) <span class="keyword">over</span> (<span class="keyword">distribute</span> <span class="keyword">by</span> <span class="keyword">class</span> <span class="keyword">sort</span> <span class="keyword">by</span> rn),<span class="number">0</span>) <span class="keyword">as</span> rn_diff</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">class</span>,stu_no,score,</span><br><span class="line">row_number() <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> <span class="keyword">class</span> <span class="keyword">sort</span> <span class="keyword">by</span> score <span class="keyword">desc</span>) <span class="keyword">as</span> rn</span><br><span class="line"><span class="keyword">from</span> stu) a</span><br><span class="line"><span class="keyword">where</span> a.rn&lt;<span class="number">4</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-7-每个店铺的当月销售额和累计到当月的总销售额"><a href="#1-1-7-每个店铺的当月销售额和累计到当月的总销售额" class="headerlink" title="1.1.7 每个店铺的当月销售额和累计到当月的总销售额"></a><strong>1.1.7</strong> <strong>每个店铺的当月销售额和累计到当月的总销售额</strong></h4><p>数据： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">店铺,月份,金额 </span><br><span class="line"></span><br><span class="line">a,01,150 </span><br><span class="line">a,01,200 </span><br><span class="line">b,01,1000 </span><br><span class="line">b,01,800 </span><br><span class="line">c,01,250 </span><br><span class="line">c,01,220 </span><br><span class="line">b,01,6000 </span><br><span class="line">a,02,2000 </span><br><span class="line">a,02,3000 </span><br><span class="line">b,02,1000 </span><br><span class="line">b,02,1500 </span><br><span class="line">c,02,350 </span><br><span class="line">c,02,280 </span><br><span class="line">a,03,350 </span><br><span class="line">a,03,250</span><br></pre></td></tr></table></figure>
+
+<p>编写Hive的HQL语句求出每个店铺的当月销售额和累计到当月的总销售额? </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="keyword">store</span>(</span><br><span class="line"><span class="keyword">store</span> <span class="keyword">string</span>,</span><br><span class="line"><span class="keyword">month</span> <span class="built_in">int</span>,</span><br><span class="line">money <span class="built_in">bigint</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./store.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="keyword">store</span>;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/10/使用Shell脚本开启-关闭集群服务/" rel="next" title="使用Shell脚本开启/关闭集群服务">
+                  <i class="fa fa-chevron-left"></i> 使用Shell脚本开启/关闭集群服务
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive场景题"><span class="nav-number">1.</span> <span class="nav-text">Hive场景题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-hive窗口函数"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 hive窗口函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-4-编写连续7天登录的总人数"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">1.1.4 编写连续7天登录的总人数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">1.1.6 编写 sql  句实现每班前三名，分数一样并列，同时求出前三名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-7-每个店铺的当月销售额和累计到当月的总销售额"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">1.1.7 每个店铺的当月销售额和累计到当月的总销售额</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg"
+      alt="Code君">
+  <p class="site-author-name" itemprop="name">Code君</p>
+  <div class="site-description" itemprop="description">不积跬步何以致千里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=523042017&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Code君</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</html>
