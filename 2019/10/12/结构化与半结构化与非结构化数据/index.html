@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="结构化与半结构化与非结构化数据1.结构化数据结构化的数据是指可以使用关系型数据库表示和存储，表现为二维形式的数据。一般特点是：数据以行为单位，一行数据表示一个实体的信息，每一行数据的属性是相同的。例子：1234id      name    age     gender1       lyh     12      male2       liangyh 13      female3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构化  半结构化  非结构化数据">
+<meta property="og:url" content="http://yoursite.com/2019/10/12/结构化与半结构化与非结构化数据/index.html">
+<meta property="og:site_name" content="Code君博客">
+<meta property="og:description" content="结构化与半结构化与非结构化数据1.结构化数据结构化的数据是指可以使用关系型数据库表示和存储，表现为二维形式的数据。一般特点是：数据以行为单位，一行数据表示一个实体的信息，每一行数据的属性是相同的。例子：1234id      name    age     gender1       lyh     12      male2       liangyh 13      female3">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-12T13:13:00.380Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="结构化  半结构化  非结构化数据">
+<meta name="twitter:description" content="结构化与半结构化与非结构化数据1.结构化数据结构化的数据是指可以使用关系型数据库表示和存储，表现为二维形式的数据。一般特点是：数据以行为单位，一行数据表示一个实体的信息，每一行数据的属性是相同的。例子：1234id      name    age     gender1       lyh     12      male2       liangyh 13      female3">
+  <link rel="canonical" href="http://yoursite.com/2019/10/12/结构化与半结构化与非结构化数据/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>结构化  半结构化  非结构化数据 | Code君博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Code君博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">www.DongjinCoder.cn</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/12/结构化与半结构化与非结构化数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Code君">
+      <meta itemprop="description" content="不积跬步何以致千里">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code君博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">结构化  半结构化  非结构化数据
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-12 21:22:06 / 修改时间：21:13:00" itemprop="dateCreated datePublished" datetime="2019-10-12T21:22:06+08:00">2019-10-12</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="结构化与半结构化与非结构化数据"><a href="#结构化与半结构化与非结构化数据" class="headerlink" title="结构化与半结构化与非结构化数据"></a>结构化与半结构化与非结构化数据</h1><h2 id="1-结构化数据"><a href="#1-结构化数据" class="headerlink" title="1.结构化数据"></a>1.结构化数据</h2><p>结构化的数据是指可以使用关系型数据库表示和存储，表现为二维形式的数据。一般特点是：数据以行为单位，一行数据表示一个实体的信息，每一行数据的属性是相同的。例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id      name    age     gender</span><br><span class="line">1       lyh     12      male</span><br><span class="line">2       liangyh 13      female</span><br><span class="line">3       liang   18      male</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<p>所以，结构化的数据的存储和排列是很有规律的，这对查询和修改等操作很有帮助</p>
+<p>但是它的扩展性不好，比如需要的时候加个字段，在实际运用中每次都进行反复的表结构变更，这容易导致后台接口从数据库取数据出错。</p>
+<h2 id="2-半结构化数据"><a href="#2-半结构化数据" class="headerlink" title="2.半结构化数据"></a>2.半结构化数据</h2><p>半结构化数据是结构化数据的一种形式，它并不符合关系型数据库或其他数据表的形式关联起来的数据模型结构，但包含相关标记，用来分隔语义元素以及对记录和字段进行分层。因此，它也被称为自描述的结构。</p>
+<p>半结构化数据，属于同一类实体可以有不同的属性，即使他们被组合在一起，这些属性的顺序并不重要。</p>
+<p>常见的半结构数据有XML和JSON，对于两个XML文件，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;person&gt;</span><br><span class="line">    &lt;name&gt;A&lt;/name&gt;</span><br><span class="line">    &lt;age&gt;13&lt;/age&gt;</span><br><span class="line">    &lt;gender&gt;female&lt;/gender&gt;</span><br><span class="line">&lt;/person&gt;</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子中，属性的顺序是不重要的，不同的半结构化数据的属性的个数是不一定一样的。上面的例子中，<code>&lt;person&gt;</code>标签是树的根节点，<code>&lt;name&gt;</code>和<code>&lt;gender&gt;</code>标签是子节点。通过这样的数据格式，可以自由地表达很多有用的信息，包括自我描述信息（元数据）。所以，半结构化数据的扩展性是很好的。</p>
+<h2 id="3-非结构化数据"><a href="#3-非结构化数据" class="headerlink" title="3.非结构化数据"></a>3.非结构化数据</h2><p>非结构化数据是数据结构不规则或不完整，没有预定义的数据模型，不方便用数据库二维逻辑表来表现的数据。包括所有格式的办公文档、文本、图片、各类报表、图像和音频/视频信息等等。</p>
+<p>例如<strong>hbase数据库</strong>就是一个<strong>NoSql</strong>(Not Only SQL，泛指<strong>非关系型数据库</strong>)。</p>
+<p><strong>Hbase是一个分布式的、面向列，运行在HDFS上的数据库</strong> </p>
+<p><strong>适合存储访问超大规模的数据集,可以提供数据的实时随机读写</strong></p>
+<h3 id="3-1hbase与hive"><a href="#3-1hbase与hive" class="headerlink" title="3.1hbase与hive"></a>3.1hbase与hive</h3><p>1.数据量越来越大，传统的关系型数据库不能满足存储和查询的需求。而hive虽然能够满足存储的要求，但是hive的本质也是利用底层的mr程序， 所以读写速度不快。</p>
+<p>2.hive不能满足非结构化的、半结构化的存储，hive的主要作用是做分析和统计，hive用于存储是无意义的。 </p>
+<h3 id="3-2hbase与hive的整合"><a href="#3-2hbase与hive的整合" class="headerlink" title="3.2hbase与hive的整合"></a>3.2hbase与hive的整合</h3><h4 id="3-2-1-整合的原因"><a href="#3-2-1-整合的原因" class="headerlink" title="3.2.1 整合的原因"></a>3.2.1 整合的原因</h4><ol>
+<li>HBase的最主要的目的是做数据存储</li>
+<li>Hive的最主要作用是做数据分析</li>
+<li>整合的目的是为了方便的在项目中存储+分析</li>
+<li>hbase中的表数据在hive中能看到，hive中的表数据在hbase中也能看到</li>
+</ol>
+<h4 id="3-2-2整合hive到hbase中"><a href="#3-2-2整合hive到hbase中" class="headerlink" title="3.2.2整合hive到hbase中"></a>3.2.2整合hive到hbase中</h4><h5 id="hive中创建内部表"><a href="#hive中创建内部表" class="headerlink" title="hive中创建内部表"></a>hive中创建内部表</h5><p> 在hive中建立hbase的内部映射表，会同时在hive和hbase两端都执行建表操作，要求hbase端的表事先不存在。hive端执行表删除操作时，hbase对应的表也会被删除。</p>
+<p>1&gt; hive中建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> test.hivein2hbase</span><br><span class="line">  (<span class="keyword">key</span> <span class="keyword">string</span>, </span><br><span class="line">   parentid <span class="keyword">string</span>,</span><br><span class="line">   departmentid <span class="keyword">string</span>)</span><br><span class="line"><span class="keyword">STORED</span> <span class="keyword">BY</span> <span class="string">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span></span><br><span class="line">  <span class="keyword">WITH</span> SERDEPROPERTIES (<span class="string">"hbase.columns.mapping"</span> = <span class="string">":key,0:PARENTID,0:DEPARTMENTID"</span>)</span><br><span class="line">TBLPROPERTIES (<span class="string">"hbase.table.name"</span> = <span class="string">"HIVEIN2HBASE"</span>, <span class="string">"hbase.mapred.output.outputtable"</span> = <span class="string">"HIVEIN2HBASE"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>2&gt; hbase查看表结构</p>
+<p>3&gt; hive中插入数据</p>
+<p>  将hive中的一张表的数据插入hivein2hbase中，插入操作会通过hive的MR实现插入操作。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">table</span> hivein2hbase <span class="keyword">select</span> * <span class="keyword">from</span> dim_staff;</span><br></pre></td></tr></table></figure>
+
+<p>4&gt; hbase查看数据</p>
+<h5 id="hive中创建外部表"><a href="#hive中创建外部表" class="headerlink" title="hive中创建外部表"></a>hive中创建外部表</h5><p>在hive中建立hbase的外部映射表，只在hive端执行建表操作，要求hbase端的表事先存在。hive端执行表删除操作时，只会删除hive端的外部映射表，对hbase中被映射的表无影响</p>
+<p>1&gt; hbase已存在表</p>
+<p>2&gt; hive中建立映射表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> test.hiveout2hbase</span><br><span class="line">  (<span class="keyword">key</span> <span class="keyword">string</span>, </span><br><span class="line">   parentid <span class="keyword">string</span>,</span><br><span class="line">   departmentid <span class="keyword">string</span>)</span><br><span class="line"><span class="keyword">STORED</span> <span class="keyword">BY</span> <span class="string">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span></span><br><span class="line">  <span class="keyword">WITH</span> SERDEPROPERTIES (<span class="string">"hbase.columns.mapping"</span> = <span class="string">":key,0:PARENTID,0:DEPARTMENTID"</span>)</span><br><span class="line">TBLPROPERTIES (<span class="string">"hbase.table.name"</span> = <span class="string">"TESTA"</span>, <span class="string">"hbase.mapred.output.outputtable"</span> = <span class="string">"TESTA"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>3&gt; hive中查询</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/10/hive场景题/" rel="next" title="Hive场景题练习">
+                  <i class="fa fa-chevron-left"></i> Hive场景题练习
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化与半结构化与非结构化数据"><span class="nav-number">1.</span> <span class="nav-text">结构化与半结构化与非结构化数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-结构化数据"><span class="nav-number">1.1.</span> <span class="nav-text">1.结构化数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-半结构化数据"><span class="nav-number">1.2.</span> <span class="nav-text">2.半结构化数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-非结构化数据"><span class="nav-number">1.3.</span> <span class="nav-text">3.非结构化数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1hbase与hive"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1hbase与hive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2hbase与hive的整合"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2hbase与hive的整合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-整合的原因"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">3.2.1 整合的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2整合hive到hbase中"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">3.2.2整合hive到hbase中</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#hive中创建内部表"><span class="nav-number">1.3.2.2.1.</span> <span class="nav-text">hive中创建内部表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hive中创建外部表"><span class="nav-number">1.3.2.2.2.</span> <span class="nav-text">hive中创建外部表</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg"
+      alt="Code君">
+  <p class="site-author-name" itemprop="name">Code君</p>
+  <div class="site-description" itemprop="description">不积跬步何以致千里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=523042017&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Code君</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</html>
