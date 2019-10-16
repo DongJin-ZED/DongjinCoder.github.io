@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive场景题练习">
+<meta property="og:url" content="http://yoursite.com/2019/10/15/hive场景题/index.html">
+<meta property="og:site_name" content="Code君博客">
+<meta property="og:description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-16T09:56:38.990Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive场景题练习">
+<meta name="twitter:description" content="更新中ing…………………….Hive场景题1.1 hive窗口函数1.1.4 编写连续7天登录的总人数1234567891011121314151617181920212223242526数据: t1表 Uid dt login_status(1登录成功,0异常) 1 2019-07-11 1 1 2019-07-12 1 1 2019-07-13 1 1 2019-07-14 1 1 2019">
+  <link rel="canonical" href="http://yoursite.com/2019/10/15/hive场景题/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Hive场景题练习 | Code君博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Code君博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">www.DongjinCoder.cn</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/hive场景题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Code君">
+      <meta itemprop="description" content="不积跬步何以致千里">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code君博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Hive场景题练习
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 23:21:44" itemprop="dateCreated datePublished" datetime="2019-10-15T23:21:44+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-16 17:56:38" itemprop="dateModified" datetime="2019-10-16T17:56:38+08:00">2019-10-16</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>更新中ing…………………….</p><h1 id="Hive场景题"><a href="#Hive场景题" class="headerlink" title="Hive场景题"></a>Hive场景题</h1><h2 id="1-1-hive窗口函数"><a href="#1-1-hive窗口函数" class="headerlink" title="1.1 hive窗口函数"></a>1.1 hive窗口函数</h2><h4 id="1-1-4-编写连续7天登录的总人数"><a href="#1-1-4-编写连续7天登录的总人数" class="headerlink" title="1.1.4 编写连续7天登录的总人数"></a><strong>1.1.4</strong> <strong>编写连续7天登录的总人数</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">数据: t1表 </span><br><span class="line">Uid dt login_status(1登录成功,0异常) </span><br><span class="line">1 2019-07-11 1 </span><br><span class="line">1 2019-07-12 1 </span><br><span class="line">1 2019-07-13 1 </span><br><span class="line">1 2019-07-14 1 </span><br><span class="line">1 2019-07-15 1 </span><br><span class="line">1 2019-07-16 1 </span><br><span class="line">1 2019-07-17 1 </span><br><span class="line">1 2019-07-18 1 </span><br><span class="line">2 2019-07-11 1 </span><br><span class="line">2 2019-07-12 1 </span><br><span class="line">2 2019-07-13 0 </span><br><span class="line">2 2019-07-14 1 </span><br><span class="line">2 2019-07-15 1 </span><br><span class="line">2 2019-07-16 0 </span><br><span class="line">2 2019-07-17 1 </span><br><span class="line">2 2019-07-18 0 </span><br><span class="line">3 2019-07-11 1 </span><br><span class="line">3 2019-07-12 1 </span><br><span class="line">3 2019-07-13 1 </span><br><span class="line">3 2019-07-14 1 </span><br><span class="line">3 2019-07-15 1 </span><br><span class="line">3 2019-07-16 1 </span><br><span class="line">3 2019-07-17 1 </span><br><span class="line">3 2019-07-18 1</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<p>思路：应用了dateiff()函数 两个日期相减 </p>
+<p>select dateiff(dt,lag(dt,6) over(distribute by uid sort by dt)) from t1</p>
+<p>求用户有没有七天以上 </p>
+<p>然后 select dateiff(dt,lag(dt,6) over(distribute by uid sort by dt)) from t1 where login_status=1</p>
+<p>添加条件 用户在七天里的状态都必须为1 </p>
+<p>最好count一下 注意要distinct uid 条件是 登录的天数为6 也就是 dateiff（）函数 =6</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t1(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line">dt <span class="keyword">string</span>,</span><br><span class="line">login_status <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./t1.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t1;</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="keyword">distinct</span> a.uid)</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> uid,login_status,</span><br><span class="line"><span class="keyword">datediff</span>(dt,lag(dt,<span class="number">6</span>) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> uid <span class="keyword">sort</span> <span class="keyword">by</span> dt <span class="keyword">asc</span>)) b</span><br><span class="line"><span class="keyword">from</span> t1</span><br><span class="line"><span class="keyword">where</span> login_status=<span class="number">1</span>) a</span><br><span class="line"><span class="keyword">where</span> a.b=<span class="number">6</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 结果为 2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名"><a href="#1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名" class="headerlink" title="1.1.6 编写 sql  句实现每班前三名，分数一样并列，同时求出前三名"></a><strong>1.1.6</strong> <strong>编写</strong> <strong>sql</strong>  <strong>句实现每班前三名，分数一样并列，同时求出前三名</strong></h4><p><strong>按名次排序的一次的分差：</strong></p>
+<p>数据： stu表 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Stu_no class score </span><br><span class="line"></span><br><span class="line">1 1901 90 </span><br><span class="line">2 1901 90 </span><br><span class="line">3 1901 83 </span><br><span class="line">4 1901 60 </span><br><span class="line">5 1902 66 </span><br><span class="line">6 1902 23 </span><br><span class="line">7 1902 99 </span><br><span class="line">8 1902 67 </span><br><span class="line">9 1902 87</span><br></pre></td></tr></table></figure>
+
+<p>编写sql实现，结果如下：</p>
+<p>结果数据： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">班级 stu_no score rn rn1 rn_diff </span><br><span class="line"></span><br><span class="line">1901 1 90 1 1 90 </span><br><span class="line">1901 2 90 2 1 0 </span><br><span class="line">1901 3 83 3 1 -7 </span><br><span class="line">1902 7 99 1 1 99 </span><br><span class="line">1902 9 87 2 2 -12 </span><br><span class="line">1902 8 67 3 3 -20</span><br></pre></td></tr></table></figure>
+
+<p>思路：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> stu(</span><br><span class="line">Stu_no <span class="built_in">int</span>,</span><br><span class="line"><span class="keyword">class</span> <span class="built_in">int</span>,</span><br><span class="line">score <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./stu.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> stu;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> a.class <span class="keyword">as</span> <span class="string">`班级`</span>,a.stu_no,a.score,a.rn,</span><br><span class="line">score-nvl(lag(score) <span class="keyword">over</span> (<span class="keyword">distribute</span> <span class="keyword">by</span> <span class="keyword">class</span> <span class="keyword">sort</span> <span class="keyword">by</span> rn),<span class="number">0</span>) <span class="keyword">as</span> rn_diff</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">class</span>,stu_no,score,</span><br><span class="line">row_number() <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> <span class="keyword">class</span> <span class="keyword">sort</span> <span class="keyword">by</span> score <span class="keyword">desc</span>) <span class="keyword">as</span> rn</span><br><span class="line"><span class="keyword">from</span> stu) a</span><br><span class="line"><span class="keyword">where</span> a.rn&lt;<span class="number">4</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-7-每个店铺的当月销售额和累计到当月的总销售额"><a href="#1-1-7-每个店铺的当月销售额和累计到当月的总销售额" class="headerlink" title="1.1.7 每个店铺的当月销售额和累计到当月的总销售额"></a><strong>1.1.7</strong> <strong>每个店铺的当月销售额和累计到当月的总销售额</strong></h4><p>数据： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">店铺,月份,金额 </span><br><span class="line">a,01,150</span><br><span class="line">a,01,200</span><br><span class="line">b,01,1000</span><br><span class="line">b,01,800</span><br><span class="line">c,01,250</span><br><span class="line">c,01,220</span><br><span class="line">b,01,6000</span><br><span class="line">a,02,2000</span><br><span class="line">a,02,3000</span><br><span class="line">b,02,1000</span><br><span class="line">b,02,1500</span><br><span class="line">c,02,350</span><br><span class="line">c,02,280</span><br><span class="line">a,03,350</span><br><span class="line">a,03,250</span><br></pre></td></tr></table></figure>
+
+<p>编写Hive的HQL语句求出每个店铺的当月销售额和累计到当月的总销售额? </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="keyword">store</span>(</span><br><span class="line">store_name <span class="keyword">string</span>,</span><br><span class="line"><span class="keyword">month</span> <span class="keyword">string</span>,</span><br><span class="line">money <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./store.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="keyword">store</span>;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> b.store_name,b.month,b.a <span class="keyword">as</span> <span class="string">`当月销售额`</span>,</span><br><span class="line"><span class="keyword">sum</span>(b.a) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> b.store_name <span class="keyword">sort</span> <span class="keyword">by</span> b.month) <span class="keyword">as</span> <span class="string">`累计到当月的总销售额`</span></span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> store_name,<span class="keyword">month</span>,<span class="keyword">sum</span>(money) <span class="keyword">as</span> a</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">store</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> store_name,<span class="keyword">month</span>) b</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-9-订单及订单类型行列互换"><a href="#1-1-9-订单及订单类型行列互换" class="headerlink" title="1.1.9 订单及订单类型行列互换"></a><strong>1.1.9</strong> <strong>订单及订单类型行列互换</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">t1表: </span><br><span class="line">order_id order_type order_time </span><br><span class="line">111 N 10:00 </span><br><span class="line">111 A 10:05 </span><br><span class="line">111 B 10:10 </span><br><span class="line"></span><br><span class="line">是用hql获取结果如下： </span><br><span class="line">order_id order_type_1 order_type_2 order_time_1 order_time_2 </span><br><span class="line">111 N A 10:00 10:05 </span><br><span class="line">111 A B 10:05 10:10</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> order1(</span><br><span class="line">order_id <span class="built_in">int</span>,</span><br><span class="line">order_type <span class="keyword">string</span>,</span><br><span class="line">order_time <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/order.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> order1;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> order_id,</span><br><span class="line">order_type order_type_1,</span><br><span class="line"><span class="keyword">lead</span>(order_type) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> order_id <span class="keyword">sort</span> <span class="keyword">by</span> order_time <span class="keyword">asc</span>) order_type_2,</span><br><span class="line">order_time order_time_1,</span><br><span class="line"><span class="keyword">lead</span>(order_time) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> order_id <span class="keyword">sort</span> <span class="keyword">by</span> order_time <span class="keyword">asc</span>) order_time_2</span><br><span class="line"><span class="keyword">from</span> order1) a</span><br><span class="line"><span class="keyword">where</span> a.order_type_2 <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-10-某APP每天访问数据存放在表access-log里面"><a href="#1-1-10-某APP每天访问数据存放在表access-log里面" class="headerlink" title="1.1.10 某APP每天访问数据存放在表access_log里面"></a>1.1.10 某APP每天访问数据存放在表access_log里面</h4><p>包含日期字段ds,用户类型字段user_type，用户账号user_id,用户访问时间log_time,请使用hive的hql语句实现如下需求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(1)、每天整体的访问UV、PV?</span><br><span class="line">(2)、每天每个类型的访问UV、PV? </span><br><span class="line">(3)、每天每个类型中最早访问时间和最晚访问时间? </span><br><span class="line">(4)、每天每个类型中访问次数最高的10个用户?</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- PV（Page View）访问量, 即页面浏览量或点击量，衡量网站用户访问的网页数量</span></span><br><span class="line"><span class="comment">-- UV（Unique Visitor）独立访客，统计1天内访问某站点的用户数(以cookie为依据)</span></span><br><span class="line"><span class="comment">-- IP（Internet Protocol）独立IP数，是指1天内多少个独立的IP浏览了页面，即统计不同的IP浏览用户数量</span></span><br><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> access_log(</span><br><span class="line">user_type <span class="keyword">string</span>,</span><br><span class="line">user_id <span class="built_in">int</span>,</span><br><span class="line">log_time <span class="keyword">string</span>,</span><br><span class="line">ds <span class="built_in">timestamp</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line">(1)</span><br><span class="line"><span class="keyword">select</span> user_type,<span class="keyword">count</span>(<span class="number">1</span>) pv,<span class="keyword">count</span>(<span class="keyword">distinct</span> user_id) uv</span><br><span class="line"><span class="keyword">from</span> access_log</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> ds</span><br><span class="line">;</span><br><span class="line">(2)</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>) pv,<span class="keyword">count</span>(<span class="keyword">distinct</span> user_id) uv</span><br><span class="line"><span class="keyword">from</span> access_long</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> ds,user_type</span><br><span class="line">;</span><br><span class="line">(3)</span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="keyword">first_value</span>(log_time) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> user_type <span class="keyword">sort</span> <span class="keyword">by</span> ds)</span><br><span class="line"><span class="keyword">last_value</span>(log_time) <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> user_type <span class="keyword">sort</span> <span class="keyword">by</span> ds)</span><br><span class="line"><span class="keyword">from</span> access_log</span><br><span class="line">;</span><br><span class="line">(4)</span><br><span class="line"><span class="keyword">select</span> row_number(<span class="keyword">distribute</span> <span class="keyword">by</span> user_type,ds <span class="keyword">sort</span> <span class="keyword">by</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-11-每个用户连续登陆的最大天数？"><a href="#1-1-11-每个用户连续登陆的最大天数？" class="headerlink" title="1.1.11 每个用户连续登陆的最大天数？"></a><strong>1.1.11</strong> <strong>每个用户连续登陆的最大天数？</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">数据: </span><br><span class="line">login表 </span><br><span class="line">uid,date </span><br><span class="line">1,2019-08-01 </span><br><span class="line">1,2019-08-02 </span><br><span class="line">1,2019-08-03 </span><br><span class="line">2,2019-08-01 </span><br><span class="line">2,2019-08-02 </span><br><span class="line">3,2019-08-01 </span><br><span class="line">3,2019-08-03 </span><br><span class="line">4,2019-07-28 </span><br><span class="line">4,2019-07-29 </span><br><span class="line">4,2019-08-01 </span><br><span class="line">4,2019-08-02 </span><br><span class="line">4,2019-08-03</span><br><span class="line">结果如下： </span><br><span class="line">uid cnt_days </span><br><span class="line">1 3 </span><br><span class="line">2 2 </span><br><span class="line">3 1 </span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
+
+<p>思路 从时间下手 使用data_sub(dt,2) 第一个参数是时间 第二个参数是数字 时间-数字 求出差</p>
+<p>要判断是否连续登录 再使用一个row_number 按照时间排序 放在第二个参数上</p>
+<p> 例如   2019-08-01 -1 =2019-07-31 2019-08-02  -2  =2019-07-31  结果相同 相同的count一下 就证明连续几天了 </p>
+<p>再例如 2019-08-01 -1 =2019-07-31 2019-08-03-2=2019-08-01       结果不同 </p>
+<p>最后count要取最大的 因为同一个用户 可能会连续登录3天中间断一天再连续登录4天 取最大的四天</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> login(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line">dt <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/login.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> login;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> uid,<span class="keyword">max</span>(cn) <span class="keyword">from</span> </span><br><span class="line">(<span class="keyword">select</span> uid,<span class="keyword">count</span>(*) cn <span class="keyword">from</span> </span><br><span class="line">(<span class="keyword">select</span> uid,<span class="keyword">date_sub</span>(dt,row_number() <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> uid <span class="keyword">sort</span> <span class="keyword">by</span> dt)) dts </span><br><span class="line"><span class="keyword">from</span> login) a</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> uid,dts) b</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> uid</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-12-使用hive的hql实现男女各自第一名及其它"><a href="#1-1-12-使用hive的hql实现男女各自第一名及其它" class="headerlink" title="1.1.12 使用hive的hql实现男女各自第一名及其它"></a><strong>1.1.12</strong> <strong>使用hive</strong>的hql实现男女各自第一名及其它</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id sex chinese_s math_s </span><br><span class="line">0 0 70 50</span><br><span class="line">1 0 90 70</span><br><span class="line">2 1 80 90</span><br><span class="line">1、男女各自语文第一名（0:男，1:女） </span><br><span class="line">2、男生成绩语文大于80，女生数学成绩大于70</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> score1(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>,</span><br><span class="line">sex <span class="built_in">int</span>,</span><br><span class="line">chinese_s <span class="built_in">int</span>,</span><br><span class="line">math_s <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/score.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> score1;</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line">1.</span><br><span class="line"><span class="keyword">select</span> sex,<span class="keyword">max</span>(chinese_s) <span class="keyword">from</span> score1 <span class="keyword">group</span> <span class="keyword">by</span> sex;</span><br><span class="line">2.</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,chinese_s <span class="keyword">from</span> score1 <span class="keyword">where</span> sex=<span class="number">0</span> <span class="keyword">and</span> chinses_s&gt;<span class="number">80</span></span><br><span class="line"><span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,math_s <span class="keyword">from</span> score1 <span class="keyword">where</span> sex=<span class="number">1</span> <span class="keyword">and</span> math_s&gt;<span class="number">70</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-13-使用hive的hql实现最大连续访问"><a href="#1-1-13-使用hive的hql实现最大连续访问" class="headerlink" title="1.1.13 使用hive的hql实现最大连续访问"></a><strong>1.1.13</strong> 使用hive的hql实现最大连续访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">log_time uid </span><br><span class="line">2018-10-01 18:00:00,123</span><br><span class="line">2018-10-02 18:00:00,123</span><br><span class="line">2018-10-02 19:00:00,456</span><br><span class="line">2018-10-04 18:00:00,123</span><br><span class="line">2018-10-04 18:00:00,456</span><br><span class="line">2018-10-05 18:00:00,123</span><br><span class="line">2018-10-06 18:00:00,123</span><br><span class="line">求每个用户本月最大连续登录天数</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--建表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> login1(</span><br><span class="line">log_time <span class="keyword">string</span>,</span><br><span class="line">uid <span class="built_in">int</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">'./hivedata/login1.txt'</span> <span class="keyword">into</span> <span class="keyword">table</span> login1;</span><br><span class="line"></span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> uid,<span class="keyword">max</span>(cn) <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> uid,<span class="keyword">count</span>(*) cn <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> uid,<span class="keyword">date_sub</span>(log_time,row_number() <span class="keyword">over</span>(<span class="keyword">distribute</span> <span class="keyword">by</span> uid <span class="keyword">sort</span> <span class="keyword">by</span> log_time)) dts</span><br><span class="line"><span class="keyword">from</span> login1) a</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> uid,dts) b</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> uid</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-行列互换"><a href="#1-2-行列互换" class="headerlink" title="1.2 行列互换"></a>1.2 <strong>行列互换</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">行转列： </span><br><span class="line">1、使用case when 查询出多列即可，即可增加列。 </span><br><span class="line">列转行: </span><br><span class="line">1、lateral view explode()，使用炸裂函数可以将1列转成多行，被转换列适用于array、map等类型。 lateral view posexplode(数组)，如有排序需求，则需要索引。将数组炸开成两行(索引 , 值),需要 as 两个别名。 </span><br><span class="line">2、case when 结合concat_ws与collect_set/collect_list实现。内层用case when，外层用 collect_set/list收集，对搜集完后用concat_ws分割连接形成列。</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-编写sql实现如下："><a href="#1-2-3-编写sql实现如下：" class="headerlink" title="1.2.3 编写sql实现如下："></a><strong>1.2.3</strong> <strong>编写</strong>sql实现如下：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">t1表 </span><br><span class="line">uid tags </span><br><span class="line">1 1,2,3</span><br><span class="line">2 2,3</span><br><span class="line">3 1,2</span><br><span class="line">编写sql实现如下结果： </span><br><span class="line">uid tag </span><br><span class="line">1 1</span><br><span class="line">1 2</span><br><span class="line">1 3</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">3 1</span><br><span class="line">3 2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t1(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line">tag <span class="built_in">array</span>&lt;<span class="built_in">int</span>&gt;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">collection items <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t1.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t1;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> uid,tag <span class="keyword">from</span> t1 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(tags) s <span class="keyword">as</span> tag;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-用户标签连接查询"><a href="#1-2-4-用户标签连接查询" class="headerlink" title="1.2.4 用户标签连接查询"></a>1.2.4 <strong>用户标签连接查询</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">T1表: </span><br><span class="line">Tags </span><br><span class="line">1,2,3</span><br><span class="line">1,2</span><br><span class="line">2,3 </span><br><span class="line">T2表: </span><br><span class="line">Id lab </span><br><span class="line">1 A</span><br><span class="line">2 B</span><br><span class="line">3 C</span><br><span class="line">根据T1和T2表的数据，编写sql实现如下结果： </span><br><span class="line">ids tags</span><br><span class="line">1,2,3 A,B,C</span><br><span class="line">1,2 A,B</span><br><span class="line">2,3 B,C</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="number">1</span>t24(</span><br><span class="line">tags <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">''</span></span><br><span class="line">;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="number">2</span>t24(</span><br><span class="line"><span class="keyword">id</span> <span class="keyword">string</span>,</span><br><span class="line">lab <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/1t24.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="number">1</span>t24</span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/2t24.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="number">2</span>t24;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> tags,<span class="keyword">concat_ws</span>(<span class="string">","</span>,collect_list(lab)) <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> t1.tags tags,<span class="number">2</span>t24.lab lab <span class="keyword">from</span> </span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">id</span>,tags <span class="keyword">from</span> <span class="number">1</span>t24 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(tags,<span class="string">","</span>)) tmp <span class="keyword">as</span> <span class="keyword">id</span>) t1  </span><br><span class="line"><span class="keyword">join</span> <span class="number">2</span>t24</span><br><span class="line"><span class="keyword">on</span> t1.id=<span class="number">2</span>t24.id) tmp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> tags;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> tags, <span class="keyword">concat_ws</span>(<span class="string">","</span>,collect_list(lab)) <span class="keyword">from</span> (<span class="keyword">select</span> t1.tags tags, t3.lab lab <span class="keyword">from</span> (<span class="keyword">select</span> tags, <span class="keyword">id</span> <span class="keyword">from</span> t2 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(tags,<span class="string">","</span>)) tmp <span class="keyword">as</span> <span class="keyword">id</span>) t1 <span class="keyword">join</span> t3 <span class="keyword">on</span> t1.id=t3.id) tmp <span class="keyword">group</span> <span class="keyword">by</span> tags ;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-5-用户标签组合"><a href="#1-2-5-用户标签组合" class="headerlink" title="1.2.5 用户标签组合"></a><strong>1.2.5</strong> <strong>用户标签组合</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">t1表： </span><br><span class="line">id tag flag </span><br><span class="line">a b 2</span><br><span class="line">a b 1</span><br><span class="line">a b 3</span><br><span class="line">c d 6</span><br><span class="line">c d 8</span><br><span class="line">c d 8</span><br><span class="line">编写sql实现如下结果：</span><br><span class="line">id tag flag</span><br><span class="line">a b 1|2|3</span><br><span class="line">c d 6|8</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t25(</span><br><span class="line"><span class="keyword">id</span> <span class="keyword">string</span>,</span><br><span class="line">tag <span class="keyword">string</span>,</span><br><span class="line">flag <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t2.5.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t25;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,tag,<span class="keyword">concat_ws</span>(<span class="string">"|"</span>,collect_set(flag)) flag</span><br><span class="line"><span class="keyword">from</span> t25</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">id</span>,tag</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-6-用户标签行列互换"><a href="#1-2-6-用户标签行列互换" class="headerlink" title="1.2.6 用户标签行列互换"></a><strong>1.2.6</strong> <strong>用户标签行列互换</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">t1表 </span><br><span class="line">uid name tags</span><br><span class="line">1 goudan chihuo,huaci</span><br><span class="line">2 mazi sleep</span><br><span class="line">3 laotie paly</span><br><span class="line">编写sql实现如下结果</span><br><span class="line">uid name tag</span><br><span class="line">1 goudan chihuo</span><br><span class="line">1 goudan huaci</span><br><span class="line">2 mazi sleep</span><br><span class="line">3 laotie paly</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t26(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line"><span class="keyword">name</span> <span class="keyword">string</span>,</span><br><span class="line">tags <span class="built_in">array</span>&lt;<span class="keyword">string</span>&gt;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">collection items <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t26.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t26;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> uid,<span class="keyword">name</span>,tag <span class="keyword">from</span> t26 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(tags) t <span class="keyword">as</span> tag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> uid,<span class="keyword">name</span>,tag <span class="keyword">from</span> t26 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(tags,<span class="string">","</span>)) t <span class="keyword">as</span> tag;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-7-hive实现词频统计"><a href="#1-2-7-hive实现词频统计" class="headerlink" title="1.2.7 hive实现词频统计"></a><strong>1.2.7 hive</strong>实现词频统计</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">t1表：</span><br><span class="line">uid contents</span><br><span class="line">1 i|love|china</span><br><span class="line">2 china|is|good|i|i|like</span><br><span class="line">统计结果如下,如果出现次数一样，则按照content名称排序：</span><br><span class="line">content cnt</span><br><span class="line">i 3</span><br><span class="line">china 2</span><br><span class="line">good 1</span><br><span class="line">like 1</span><br><span class="line">love 1</span><br><span class="line">is 1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t27(</span><br><span class="line">uid <span class="built_in">int</span>,</span><br><span class="line"><span class="keyword">contents</span> <span class="built_in">array</span>&lt;<span class="keyword">string</span>&gt;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">' '</span></span><br><span class="line">collection items <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'|'</span></span><br><span class="line">;</span><br><span class="line"><span class="comment">-- 加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t27.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t27;</span><br><span class="line"><span class="comment">-- 语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">content</span>,<span class="keyword">count</span>(<span class="number">1</span>) cnt <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">content</span> <span class="keyword">from</span> t27 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">contents</span>) tmp <span class="keyword">as</span> <span class="keyword">content</span>) tmp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">content</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> cnt <span class="keyword">desc</span>,<span class="keyword">content</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-8-课程行转列"><a href="#1-2-8-课程行转列" class="headerlink" title="1.2.8 课程行转列"></a>1.2.8 课程行转列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">数据： </span><br><span class="line">t1表</span><br><span class="line">id course </span><br><span class="line">1,a</span><br><span class="line">1,b</span><br><span class="line">1,c</span><br><span class="line">1,e</span><br><span class="line">2,a</span><br><span class="line">2,c</span><br><span class="line">2,d</span><br><span class="line">2,f</span><br><span class="line">3,a</span><br><span class="line">3,b</span><br><span class="line">3,c</span><br><span class="line">3,e</span><br><span class="line">根据编写sql，得到结果如下(表中的1表示选修，表中的0表示未选修)： </span><br><span class="line">id a b c d e f</span><br><span class="line">1 1 1 1 0 1 0</span><br><span class="line">2 1 0 1 1 0 1</span><br><span class="line">3 1 1 1 0 1 0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--建表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t28(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>,</span><br><span class="line">course <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">","</span></span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t28.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t28</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"a"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) a,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"b"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) b,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"c"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) c,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"e"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) d,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"d"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) e,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"e"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) f</span><br><span class="line"><span class="keyword">from</span> t28</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">id</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-9-兴趣行转列"><a href="#1-2-9-兴趣行转列" class="headerlink" title="1.2.9 兴趣行转列"></a><strong>1.2.9</strong> <strong>兴趣行转列</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">t1表 </span><br><span class="line">name sex hobby</span><br><span class="line">janson 男 打乒乓球、游泳、看电影</span><br><span class="line">tom 男 打乒乓球、看电影</span><br><span class="line">hobby最多3个值，使用hql实现结果如下:</span><br><span class="line">name sex hobby1 hobby2 hobby3</span><br><span class="line">janson 男 打乒乓球 游泳 看电影</span><br><span class="line">tom 男 打乒乓球 看电影</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--建表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t29(</span><br><span class="line"><span class="keyword">name</span> <span class="keyword">string</span>,</span><br><span class="line">sex <span class="keyword">string</span>,</span><br><span class="line">hobby <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">" "</span></span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t29.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t29</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,sex,</span><br><span class="line">collect_set(hobbies)[<span class="number">0</span>] hobby1,</span><br><span class="line">collect_set(hobbies)[<span class="number">1</span>] hobby2,</span><br><span class="line">collect_set(hobbies)[<span class="number">2</span>] hobby3</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">name</span>,sex,hobbies <span class="keyword">from</span> t29 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(hobby,<span class="string">"、"</span>)) tmp <span class="keyword">as</span> hobbies) tmp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>,sex</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-10-用户商品行列互换"><a href="#1-2-10-用户商品行列互换" class="headerlink" title="1.2.10 用户商品行列互换"></a><strong>1.2.10</strong> 用户商品行列互换</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">t1表： </span><br><span class="line">用户 商品</span><br><span class="line">A P1</span><br><span class="line">B P1</span><br><span class="line">A P2</span><br><span class="line">B P3</span><br><span class="line">请你使用hql变成如下结果:</span><br><span class="line">用户 P1 P2 P3</span><br><span class="line">A 1 1 0</span><br><span class="line">B 1 0 1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> goods=<span class="string">"P1"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) P1,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> goods=<span class="string">"P2"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) P2,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> goods=<span class="string">"P3"</span> <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) P3</span><br><span class="line"><span class="keyword">from</span> t210</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">user</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-11-成绩课程行列互换"><a href="#1-2-11-成绩课程行列互换" class="headerlink" title="1.2.11 成绩课程行列互换"></a><strong>1.2.11</strong> 成绩课程行列互换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">t1表： </span><br><span class="line">name course score</span><br><span class="line">aa English 75</span><br><span class="line">bb math 85</span><br><span class="line">aa math 90</span><br><span class="line">使用hql输出以下结果</span><br><span class="line">name English math</span><br><span class="line">aa 75 90 </span><br><span class="line">bb 0 85</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"English"</span> <span class="keyword">then</span> score <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) Engilsh,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> course=<span class="string">"math"</span> <span class="keyword">then</span> score <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) math</span><br><span class="line"><span class="keyword">from</span> t211</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-12-求top3英雄及其pick率"><a href="#1-2-12-求top3英雄及其pick率" class="headerlink" title="1.2.12 求top3英雄及其pick率"></a><strong>1.2.12</strong> <strong>求</strong>top3英雄及其pick率</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id names</span><br><span class="line">1 亚索,挖掘机,艾瑞利亚,卡莎,洛</span><br><span class="line">2 亚索,盖伦,奥巴马,牛头,皇子</span><br><span class="line">3 亚索,盖伦,艾瑞利亚,宝石,琴女</span><br><span class="line">4 亚索,盖伦,赵信,老鼠,锤石</span><br><span class="line">求出场最多的top3英雄 及 pick率 pick=出场次数/游戏场数</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--建表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> t212(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>,</span><br><span class="line"><span class="keyword">names</span> <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">" "</span></span><br><span class="line"><span class="comment">--加载数据</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> inpath <span class="string">"./hivedata/t212.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> t212</span><br><span class="line"><span class="comment">--语句实现</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,cn,pick</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">name</span>,row_number() <span class="keyword">over</span>(<span class="keyword">sort</span> <span class="keyword">by</span> cn <span class="keyword">desc</span>) rn,pick,cn</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">count</span>(<span class="number">1</span>) cn,<span class="keyword">round</span>(<span class="keyword">count</span>(<span class="number">1</span>)/<span class="number">4</span>,<span class="number">2</span>) pick</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">name</span> <span class="keyword">from</span> t212 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(<span class="keyword">names</span>,<span class="string">","</span>)) tmp <span class="keyword">as</span> <span class="keyword">name</span>) tmp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> cn <span class="keyword">desc</span>) a) b</span><br><span class="line"><span class="keyword">where</span> rn&lt;=<span class="number">3</span></span><br><span class="line">;</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>)/<span class="keyword">count</span>(<span class="keyword">distinct</span> <span class="keyword">id</span>)</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">name</span> <span class="keyword">from</span> t212 <span class="keyword">lateral</span> <span class="keyword">view</span> <span class="keyword">explode</span>(<span class="keyword">split</span>(<span class="keyword">names</span>,<span class="string">","</span>)) tmp <span class="keyword">as</span> <span class="keyword">name</span>) tmp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">name</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/12/结构化与半结构化与非结构化数据/" rel="next" title="结构化  半结构化  非结构化数据">
+                  <i class="fa fa-chevron-left"></i> 结构化  半结构化  非结构化数据
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive场景题"><span class="nav-number">1.</span> <span class="nav-text">Hive场景题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-hive窗口函数"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 hive窗口函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-4-编写连续7天登录的总人数"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">1.1.4 编写连续7天登录的总人数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-6-编写-sql-句实现每班前三名，分数一样并列，同时求出前三名"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">1.1.6 编写 sql  句实现每班前三名，分数一样并列，同时求出前三名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-7-每个店铺的当月销售额和累计到当月的总销售额"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">1.1.7 每个店铺的当月销售额和累计到当月的总销售额</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-9-订单及订单类型行列互换"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">1.1.9 订单及订单类型行列互换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-10-某APP每天访问数据存放在表access-log里面"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">1.1.10 某APP每天访问数据存放在表access_log里面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-11-每个用户连续登陆的最大天数？"><span class="nav-number">1.1.0.6.</span> <span class="nav-text">1.1.11 每个用户连续登陆的最大天数？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-12-使用hive的hql实现男女各自第一名及其它"><span class="nav-number">1.1.0.7.</span> <span class="nav-text">1.1.12 使用hive的hql实现男女各自第一名及其它</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-13-使用hive的hql实现最大连续访问"><span class="nav-number">1.1.0.8.</span> <span class="nav-text">1.1.13 使用hive的hql实现最大连续访问</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-行列互换"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.2 行列互换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-编写sql实现如下："><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.2.3 编写sql实现如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-4-用户标签连接查询"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.2.4 用户标签连接查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-5-用户标签组合"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.2.5 用户标签组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-6-用户标签行列互换"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">1.2.6 用户标签行列互换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-7-hive实现词频统计"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">1.2.7 hive实现词频统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-8-课程行转列"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">1.2.8 课程行转列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-9-兴趣行转列"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">1.2.9 兴趣行转列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-10-用户商品行列互换"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">1.2.10 用户商品行列互换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-11-成绩课程行列互换"><span class="nav-number">1.1.1.9.</span> <span class="nav-text">1.2.11 成绩课程行列互换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-12-求top3英雄及其pick率"><span class="nav-number">1.1.1.10.</span> <span class="nav-text">1.2.12 求top3英雄及其pick率</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569862609254&di=4ae327dc357f695e50290d0c0331cc0d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F06%2F20170806095742_ejJHF.thumb.700_0.jpeg"
+      alt="Code君">
+  <p class="site-author-name" itemprop="name">Code君</p>
+  <div class="site-description" itemprop="description">不积跬步何以致千里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=523042017&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Code君</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</html>
